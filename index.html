@@ -10,15 +10,22 @@
     <!--FavIcon-->
     <link rel="icon" type="image/x-icon" href="./Images/FavIcon.png">
     <title>FarmLink</title>
+
+  <style>
+    body{
+      
+      background-color: rgb(0, 174, 255); /*só para testar barra*/
+    }
+  </style>
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-expand-lg ">
+        <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light navbar-transparent col-12 navbar-scroll">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img src="./Images/LogoVerde.png" alt="LogoVerde" width="30" height="24">
                 </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNavDropdown">
@@ -38,7 +45,51 @@
           </nav>
     </div>
     <div class="container">
-
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
+      <p>scroll</p>
     </div>
+    <script>
+      window.onscroll = function() {scrollFunction()};
+ 
+ function scrollFunction() {
+   if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+     document.getElementById("navbar_top").classList.remove('navbar-transparent'/*,'navbar-light'*/);
+     document.getElementById('navbar_top').classList.add('bg-light','fixed-top'/*,'navbar-dark'*/);
+     document.body.style.paddingtop = '70px';
+   } else {
+    
+    document.getElementById('navbar_top').classList.remove('bg-light','fixed-top'/*,'navbar-dark'*/);
+    document.getElementById('navbar_top').classList.add('navbar-transparent'/*,'navbar-light'*/);
+    document.body.style.paddingtop = '0px';
+   }
+ }
+    </script>
 </body>
 </html>
