@@ -1,0 +1,31 @@
+body{
+    background-color:rgb(241, 234, 234);
+}
+#nav-linkk{
+    border-radius: 30px;
+    background-color: #548235;
+    color: white;
+    width: 115px;
+    text-align: center;
+    
+}
+.nav-item{
+    padding: 20px;
+}
+#mynavbar{
+    height: 70px;
+}
+
+div.scrollmenu {
+    background-color: rgb(241, 234, 234);
+    overflow: auto;
+    white-space: nowrap;
+}
+    
+div.scrollmenu a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+}
