@@ -10,96 +10,67 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="estilos.css">
+    <style>
+        body{
+            background-image: url("Images/backgroundindex.png");
+        }
+        #right{
+            margin-left: auto;
+        }
+        #navitem{
+            border-radius: 30px;
+            background-color: #548235;
+            margin-right: 30px;
+        }
+        .nav-link{
+            color: white;
+            padding-right: 25px;
+            width: 115px;
+            text-align: center;
+        }   
+    </style>
 </head>
 <body>
-     <nav class="navbar navbar-expand-sm" style="background-color: #6EC500;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="javascript:void(0)"><img src="./Images/LogoBranco.png" alt="" style="width: 65px;height: 50px;"></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mynavbar">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" id="nav-linkk" href="./home.html">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="nav-linkk" href="./products.html">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="nav-linkk" href="./about.html">About</a>
-        </li>
-      </ul>
-      <form class="d-flex" style="padding-top: 15px;" action="http://pornhub.com/video/search">
-        <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px" name="search">
-        <button class="btn" type="button" style="height: 40px; background-color:  #548235;color: white;">Login</button>
-        
-      </form>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="" style="color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-        </li>
-      </ul>
+    <div>
+        <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light navbar-transparent col-12 navbar-scroll">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="./index.html">
+                    <img src="./Images/LogoVerde.png" alt="LogoVerde" width="65" height="50">
+                </a>
+              <button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item" id="navitem">
+                    <a class="nav-link" aria-current="page" href="./home.html">Home</a>
+                  </li>
+                  <li class="nav-item" id="navitem">
+                    <a class="nav-link" href="./products.html">Products</a>
+                  </li>
+                  <li class="nav-item" id="navitem">
+                    <a class="nav-link" href="./about.html">About</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
     </div>
-  </div>
-</nav> 
-
-<div class="container">
-    <br>
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="./Images/slide1.png" class="d-block w-100" alt="slide1">
-      </div>
-      <div class="carousel-item">
-        <img src="./Images/slide2.png" class="d-block w-100" alt="slide2">
-      </div>
-      <div class="carousel-item">
-        <img src="./Images/slide3.png" class="d-block w-100" alt="slide3">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-  <br>
-  <div class="scrollmenu">
-    <a href="#home"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/ameixa.jpg" alt=""></a>
-    <a href="#news"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/banana.jpg" alt=""></a>
-    <a href="#contact"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/diospiro.jpg" alt=""></a>
-    <a href="#about"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/kiwi.jpg" alt=""></a>
-    <a href="#about"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/laranja.jpg" alt=""></a>
-    <a href="#about"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/pera.jpg" alt=""></a>
-    <a href="#about"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/pessego.jpg" alt=""></a>
-    <a href="#about"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/macagolden.webp" alt=""></a>
- <img src="" alt="">
-  </div> 
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      </a>
-      <span class="mb-3 mb-md-0 text-muted">© 2022 Company, Inc</span>
-    </div>
-
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"><i class="fa fa-instagram" aria-hidden="true"></i></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"><i class="fa fa-facebook" aria-hidden="true"></i></use></svg></a></li>
-      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"><i class="fa fa-twitter" aria-hidden="true"></i></use></svg></a></li>
-    </ul>
-  </footer>
-
-</div>
+    <script>
+        window.onscroll = function() {scrollFunction()};
+   
+   function scrollFunction() {
+     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+       document.getElementById("navbar_top").classList.remove('navbar-transparent'/*,'navbar-light'*/);
+       document.getElementById('navbar_top').classList.add('bg-light','fixed-top'/*,'navbar-dark'*/);
+       document.body.style.paddingtop = '70px';
+     } else {
+      
+      document.getElementById('navbar_top').classList.remove('bg-light','fixed-top'/*,'navbar-dark'*/);
+      document.getElementById('navbar_top').classList.add('navbar-transparent'/*,'navbar-light'*/);
+      document.body.style.paddingtop = '0px';
+     }
+   }
+      </script>
 </body>
 </html>
