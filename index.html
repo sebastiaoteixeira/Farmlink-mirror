@@ -12,32 +12,15 @@
     <title>FarmLink</title>
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-    <style>
-        body{
-            background-image: url("Images/backgroundindex.png");
-        }
-        #right{
-            margin-left: auto;
-        }
-        #navitem{
-            border-radius: 30px;
-            background-color: #548235;
-            margin-right: 30px;
-        }
-        .nav-link{
-            color: white;
-            padding-right: 25px;
-            width: 115px;
-            text-align: center;
-        }   
-    </style>
+    <!--CSS-->
+    <link rel="stylesheet" href="estilos1.css">
 </head>
 <body>
     <div>
         <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light navbar-transparent col-12 navbar-scroll">
             <div class="container-fluid">
                 <a class="navbar-brand" href="./index.html">
-                    <img src="./Images/LogoVerde.png" alt="LogoVerde" width="65" height="50">
+                    <img src="./Images/LogoVerde.png" alt="LogoVerde" width="109" height="60">
                 </a>
               <button class="navbar-toggler" type="button"data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,6 +40,20 @@
               </div>
             </div>
           </nav>
+    </div>
+    <div class="loginpage">
+      <div>
+        <h1 style="margin-top: 8%;">Client Login</h1>
+        <div class="email">
+            <input type="email" class="email1" placeholder="Email">
+        </div>
+        <div class="password">
+          <input type="password" class="passwordd" placeholder="Password">
+        </div>
+        </div>
+            <button class="btn btn-success" id="submitlog">Login</button>
+        </div>
+      </div>
     </div>
     <script>
         window.onscroll = function() {scrollFunction()};
