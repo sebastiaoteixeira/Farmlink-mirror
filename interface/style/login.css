@@ -1,0 +1,59 @@
+body{
+    background-image: url("../Images/backgroundindex.png");
+}
+#right{
+    margin-left: auto;
+}
+#navitem{
+    border-radius: 30px;
+    background-color: #548235;
+    margin-right: 30px;
+}
+.nav-link{
+    color: white;
+    padding-right: 25px;
+    width: 115px;
+    text-align: center;
+}   
+.loginpage{
+  
+  text-align: center;
+  background-color: #ffffff80;
+  border-radius: 30px;
+  height: 700px;
+  margin-top: 3.5%;
+}
+.email1{
+  border-radius: 130px;
+  width: 85%;
+  height: 50px;
+  margin-top: 10%;
+  background-color: #D9D9D9;
+}
+.passwordd{
+  border-radius: 130px;
+  width: 85%;
+  height: 50px;
+  margin-top: 4%;
+  background-color: #D9D9D9;
+
+}
+#submitlog{
+  width: 85%;
+  height: 60px;
+  border-radius: 130px;
+  margin-top: 8%;
+  background-color: #57B835;
+  border: none;
+}
+
+textarea:focus, input:focus {
+box-shadow: none;
+outline: 0;
+}
+input{
+  border: solid 5px #D9D9D9;
+  border-radius: 20px;
+  font-size: 20; 
+  padding: 6px 10px;
+}
