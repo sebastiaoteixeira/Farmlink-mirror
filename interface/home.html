@@ -16,37 +16,44 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-sm" style="background-color: #6EC500;">
+  <!--NAVBAR-->
+  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light" style="background-color: #6EC500;">
     <div class="container-fluid">
-      <a class="navbar-brand" href="./index.html"><img src="./Images/LogoBranco.png" alt="" style="width: 65px;height: 50px;"></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <a class="navbar-brand" href="./home.html">
+        <img src="./Images/LogoBranco.png" alt="LogoVerde" width="109" height="60">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="mynavbar">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <a class="nav-link" id="nav-linkk" href="./home.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="nav-linkk" href="./products.html">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="nav-linkk" href="./about.html">About</a>
-          </li>
-        </ul>
-        <form class="d-flex" style="padding-top: 15px;">
-          <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px">
-          <button class="btn" type="button" style="height: 40px; background-color:  #548235;color: white;"><i class="fa fa-search" aria-hidden="true"></i></button>
-
-        </form>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item">
-              <a class="nav-link" href="" style="color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+            <a class="nav-link" aria-current="page" href="./home.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./products.html">Products</a>
+          </li>
+          <li class="nav-item" id="about" style="height: 40px;">
+            <a class="nav-link" href="./about.html">About</a>
           </li>
         </ul>
+        <ul class="navbar-nav" id="right">
+          <li class="nav-item" id="cart">
+            <a class="nav-link" href="" style="width: 50px; color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+          </li>
+          <li class="nav-item" id="login">
+            <a class="nav-link" href="./login.html" style="width: 75px; color: white; font-size: 30px;"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px">
+          <button class="btn" type="button" style="height: 40px; background-color:  #548235;color: white;"><i class="fa fa-search" aria-hidden="true"></i>
+          </button>
+        </form>
       </div>
     </div>
   </nav> 
+  <!--CONTENT-->
   <div class="container">
   <br>
   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
@@ -76,7 +83,7 @@
     </button>
   </div>
   <br>
-  <div class="scrollmenu">
+  <div class="scrollmenu" id="scrollmenu">
     <a href="#home"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/ameixa.jpg" alt=""></a>
     <a href="#news"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/banana.jpg" alt=""></a>
     <a href="#contact"><img style="width: 225px;height: 225px;border-radius: 10px;" src="./Images/diospiro.jpg" alt=""></a>
@@ -102,5 +109,21 @@
   </footer>
 
 </div>
+<script>
+ // window.onscroll = function() {scrollFunction()};
+
+//function scrollFunction() {
+//if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+ //document.getElementById("navbar_top").classList.remove('navbar-transparent'/*,'navbar-light'*/);
+ //document.getElementById('navbar_top').classList.add('bg-light','fixed-top'/*,'navbar-dark'*/);
+ //document.body.style.paddingtop = '70px';
+//} else {
+//
+//document.getElementById('navbar_top').classList.remove('bg-light','fixed-top'/*,'navbar-dark'*/);
+//document.getElementById('navbar_top').classList.add('navbar-transparent'/*,'navbar-light'*/);
+//document.body.style.paddingtop = '0px';
+//}
+//}*/
+</script>
 </body>
 </html>

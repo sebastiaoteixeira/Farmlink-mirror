@@ -1,18 +1,19 @@
 body{
     background-color:rgb(241, 234, 234);
 }
-#nav-linkk{
-    border-radius: 30px;
-    background-color: #548235;
+.nav-link{
     color: white;
+    padding-right: 25px;
     width: 115px;
     text-align: center;
-    
+}   
+.nav-item:not(#cart,#login){
+    border-radius: 30px;
+    background-color: #5aa02c;
+    margin-right: 30px;
 }
-.nav-item{
-    padding: 20px;
-}
-#mynavbar{
+
+#navbar_top{
     height: 70px;
 }
 
@@ -28,4 +29,30 @@ div.scrollmenu a {
     text-align: center;
     padding: 14px;
     text-decoration: none;
+}
+
+#right{
+    margin-left: auto;
+  }
+
+
+
+#scrollmenu::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+#scrollmenu::-webkit-scrollbar {
+    width: 5px;
+    background-color: rgb(241, 234, 234);
+}
+
+#scrollmenu::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #b3b3b3;
+}
+
+#scrollmenu::-webkit-scrollbar-thumb:hover {
+    border-radius: 10px;
+    background-color: #7e7e7e;
 }
