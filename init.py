@@ -1,36 +1,28 @@
 from http import server
 
-hostname = 'localhost'
-port = 10101
+hostname = '192.168.0.25'
+port = 8080
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
         print("Request Received: ", self.path)
         path = '/home.html' if self.path == '/' else self.path
-        print(path)
         try:
-            if path.split(".")[-1] in ["png", "jpg", "webp", "ico"]:
-                f = open("interface" + path, 'rb')
+            with open("interface" + path, 'rb') as f:
                 self.send_response(200)
+                if path.split('.')[-1] in ['html', 'css']:
+                    self.send_header('Content-type', "text/" + path.split('.')[-1])
+                elif path.split('.')[-1] in ['png', 'jpeg']:
+                    self.send_header('Content-type', "image/" + path.split('.')[-1])
+                elif path.split('.')[-1] in ['jpg']:
+                    self.send_header('Content-type', "image/jpeg")
                 self.end_headers()
                 self.wfile.write(f.read())
-                return
-            elif path.split(".")[-1] in ["html"]:
-                f = open("interface" + path)
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(bytes(f.read(), "utf-8"))
-            elif path.split(".")[-1] in ["css"]:
-                f = open("interface" + path)
-                self.send_response(200)
-                self.send_header('Content-type', 'text/css')
-                self.end_headers()
-                self.wfile.write(bytes(f.read(), "utf-8"))
+            return
 
 
         except IOError:
-            self.send_error(404, f'File Not Found: {self.path:s}')
+            self.send_error(404, 'File Not Found: {}'.format(self.path))
 
 
 
