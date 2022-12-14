@@ -1,0 +1,24 @@
+.nav-link{
+    color: white;
+    padding-right: 25px;
+    width: 115px;
+    text-align: center;
+}   
+
+.nav-item:not(#cart,#login){
+    border-radius: 30px;
+    background-color: #5aa02c;
+    margin-right: 30px;
+}
+
+#navbar_top{
+    height: 70px;
+}
+
+#right{
+    margin-left: auto;
+}
+
+body{
+    background-color:rgb(241, 234, 234);
+}
