@@ -13,6 +13,16 @@
         flex-direction: row;
         
     }
+    .arrow{
+        z-index: 0;
+        position: fixed;
+        left: 10px;
+        transition: 0.3 ease;
+        opacity: 0.8;
+    }
+    .arrow:hover{
+        opacity: 1;
+    }
     .loginpage{
         background-color: white;
         width: 35vw;
@@ -22,6 +32,7 @@
         justify-content: center;
         align-items: center;
         text-align: center;
+        min-width: 460px;
     }
     .left-img{
         background-image: url("../Images/backgroundindex2.png");
