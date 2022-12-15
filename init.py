@@ -7,6 +7,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
         print("Request Received: ", self.path)
         path = '/home.html' if self.path == '/' else self.path
+        if path.count('.') == 0:
+            path += '.html'
         try:
             with open("interface" + path, 'rb') as f:
                 self.send_response(200)
