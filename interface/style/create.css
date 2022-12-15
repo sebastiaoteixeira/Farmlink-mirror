@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
+    body{
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+    }
+    .screen{
+        height: 100%;
+        width: 100%;
+    }
+       
+    .content{
+        display: flex;
+        flex-direction: row;
+        
+    }
+    .loginpage{
+        background-color: white;
+        width: 35vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+    .left-img{
+        background-image: url("../Images/backgroundindex2.png");
+        width: 65vw;
+        height: 100vh;
+    }
+    a{
+        text-decoration: none;
+    }
+    form{
+        width: 100%;
+        height: 100%;
+        margin-top: 1% ;
+        padding: 30%;
+        
+        
+        
+    }
+    #fname{
+        margin-top: 5%;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        width: 70%;
+        height: 40px;
+        padding-left: 10px;
+        background-color: #f1f1f1;
+    }
+    #email{
+        margin-top: 2.5%;
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        width: 70%;
+        height: 40px;
+        padding-left: 10px;
+        background-color: #f1f1f1;
+
+    }
+    #password{
+        border: none;
+        outline: none;
+        border-radius: 15px;
+        width: 70%;
+        height: 40px;
+        padding-left: 10px;
+        margin-top: 2.5%;
+        background-color: #f1f1f1;
+    }
+
+    #buttonsub{
+        margin-top: 4%;
+        outline: none;
+        border: none;
+        border-radius: 15px;
+        width: 70%;
+        height: 40px;
+        background-color: #6EC500;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+    }
+    #buttonsub:hover{
+        opacity: 0.8;
+    }
+
+    .already{
+        margin-top:40%;
+        position: relative;
+        bottom: 0;
+        justify-content: center;
+        
+    }
+    .check{
+        padding-left: 15%;
+        width: 70%;
+        margin-top: 1%;
+        cursor: pointer;
+
+    }
+    #already{
+        color: black;
+        font-weight: bold;
+        transition: 0.3s ease;
+        margin: auto;
+        padding: auto;
+        
+    }
+    .checkbox{
+        cursor: pointer;
+        
+    }
