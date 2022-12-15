@@ -1,6 +1,6 @@
 from http import server
 
-hostname = '192.168.0.25'
+hostname = '0.0.0.0'
 port = 8080
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
