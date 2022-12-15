@@ -3,6 +3,16 @@ body{
     font-family: 'Inter', sans-serif;
     margin: 0;
 }
+a{
+    text-decoration: none;
+}
+form{
+    width: 100%;
+    height: 100%;
+    margin-top: 1% ;
+    padding: 30%;
+}
+    
 .screen{
     height: 100%;
     width: 100%;
@@ -28,18 +38,6 @@ body{
     width: 65vw;
     height: 100vh;
 }
-a{
-    text-decoration: none;
-}
-form{
-    width: 100%;
-    height: 100%;
-    margin-top: 1% ;
-    padding: 30%;
-    
-    
-    
-}
 #email{
     margin-top: 5%;
     border: none;
@@ -61,7 +59,7 @@ form{
     margin-top: 2.5%;
     background-color: #f1f1f1;
 }
-
+/*Estilo da div do butão submit*/
 #buttonsub{
     margin-top: 4%;
     outline: none;
@@ -78,41 +76,36 @@ form{
 }
 #buttonsub:hover{
     opacity: 0.8;
+
+}
+/*Estilo da div da checkbox e do forgot pass*/
+
+.check{
+    padding-left: 15%;
+    width: 70%;
+    margin-top: 1%;
+    cursor: pointer;
+}
+.checkbox{
+    cursor: pointer;  
+}
+#checkbox{
+    float: left;
+    cursor: pointer;
+}
+.forgot{
+    color: black;
+    font-weight: 550;
 }
 #forgot{
     margin-top: 1%;
     font-weight: 700;
     float: right;
 }
-
-.create{
-    margin-top:40%;
-    position: relative;
-    bottom: 0;
-    justify-content: center;
-    
-}
-.check{
-    padding-left: 15%;
-    width: 70%;
-    margin-top: 1%;
-    cursor: pointer;
-
-}
-#checkbox{
-    float: left;
-    cursor: pointer;
-    
-}
-.forgot{
-    color: black;
-    font-weight: 550;
-}
-
 .align{
     margin: auto;
-    
 }
+/*Estilo da div do create account*/
 #create{
     color: black;
     font-weight: bold;
@@ -121,8 +114,9 @@ form{
     padding: auto;
     
 }
-
-.checkbox{
-    cursor: pointer;
-    
+.create{
+    margin-top:40%;
+    position: relative;
+    bottom: 0;
+    justify-content: center;
 }
