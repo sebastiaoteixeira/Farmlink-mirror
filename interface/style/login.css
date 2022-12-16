@@ -10,7 +10,21 @@ form{
     width: 100%;
     height: 100%;
     margin-top: 1% ;
-    padding: 30%;
+    padding-top: 30%;
+}
+.arroww{
+    font-size: 5vh; 
+    color: black;
+}
+.arrow{
+    z-index: 0;
+    position: fixed;
+    left: 10px;
+    transition: 0.3 ease;
+    opacity: 0.8;
+}
+.arrow:hover{
+    opacity: 1;
 }
     
 .screen{
@@ -32,6 +46,7 @@ form{
     justify-content: center;
     align-items: center;
     text-align: center;
+    min-width: 460px;
 }
 .right-img{
     background-image: url("../Images/backgroundindex.png");
@@ -115,7 +130,7 @@ form{
     
 }
 .create{
-    margin-top:40%;
+    margin-top:100px;
     position: relative;
     bottom: 0;
     justify-content: center;

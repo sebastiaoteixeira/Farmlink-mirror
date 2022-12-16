@@ -13,10 +13,6 @@ body{
     margin-right: 30px;
 }
 
-#navbar_top{
-    height: 70px;
-}
-
 div.scrollmenu {
     background-color: rgb(241, 234, 234);
     overflow: auto;

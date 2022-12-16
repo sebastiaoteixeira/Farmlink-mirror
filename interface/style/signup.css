@@ -55,10 +55,7 @@
         width: 100%;
         height: 100%;
         margin-top: 1% ;
-        padding: 30%;
-        
-        
-        
+        padding-top: 30%;
     }
     #fname{
         margin-top: 5%;
@@ -111,7 +108,7 @@
     }
 
     .already{
-        margin-top:40%;
+        margin-top:100px;
         position: relative;
         bottom: 0;
         justify-content: center;
