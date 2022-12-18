@@ -1,0 +1,71 @@
+#right{
+    margin-left: auto;
+}
+
+body{
+    background-color:white;
+    padding: 10px;
+}
+
+
+#img{
+    
+    float: left;
+    margin: 50px;
+    height: 200px;
+    width: 200px;
+    background-color: black;
+}
+#name{
+    margin: 50px 0px 10px 50px;
+}
+
+
+
+#minus, #plus {cursor:pointer; }
+.number{
+    margin: 30px 0px 10px 50px;
+    height: 40px;
+    width: 450px;
+}
+#minus, #plus{
+    width:25px;
+	height:20px;
+    background: green;
+    font-size: larger;
+    color: white;
+    padding:8px 5px 7px 5px;
+    border-radius:4px;
+    border:1px solid #ddd;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+input{
+    padding: 0;
+    height: 35px;
+    width: 100px;
+    text-align: center;
+    font-size: 26px;
+    border:1px solid green;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#cart {
+    border-radius: 4px;
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+#content{
+    padding: 50px 50px;
+}
