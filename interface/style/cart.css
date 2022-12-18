@@ -11,9 +11,7 @@
     margin-right: 30px;
 }
 
-#navbar_top{
-    height: 70px;
-}
+
 
 #right{
     margin-left: auto;
@@ -22,4 +20,11 @@
 
 body{
     background-color:white;
+}
+
+#square{
+    
+    height: 50px;
+    width: 50px;
+    background-color: black;
 }
