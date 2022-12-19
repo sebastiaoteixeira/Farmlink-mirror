@@ -1,6 +1,12 @@
 body{
     background-color:rgb(241, 234, 234);
 }
+#navbar_top{
+    background: linear-gradient(180deg, rgba(0,149,4,1) 0%, rgba(255,255,255,0) 100%);
+    z-index: 1; 
+    position: fixed; 
+    width: 100%;
+}
 .nav-link{
     color: white;
     padding-right: 25px;
@@ -11,6 +17,7 @@ body{
     border-radius: 30px;
     background-color: #5aa02c;
     margin-right: 30px;
+    
 }
 
 div.scrollmenu {
