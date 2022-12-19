@@ -17,7 +17,7 @@
 </head>
 <body>
   <!--NAVBAR-->
-  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light">
+  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light gradient">
     <div class="container-fluid">
       <a class="navbar-brand" href="./home.html">
         <img src="./Images/LogoBranco.png" alt="LogoVerde" width="109" height="60">
@@ -114,11 +114,13 @@
 
 function scrollFunction() {
 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-  document.getElementById("navbar_top").style.background = 'green'
+  document.getElementById("navbar_top").classList.remove('gradient');
+  document.getElementById('navbar_top').classList.add('solid-color');
 
 } 
 else {
-  document.getElementById("navbar_top").style.background = 'linear-gradient(180deg, rgba(0,149,4,1) 0%, rgba(255,255,255,0) 100%);'
+  document.getElementById('navbar_top').classList.remove('solid-color');
+  document.getElementById('navbar_top').classList.add('gradient');
 
 }
 }
