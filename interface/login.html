@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <!--CSS-->
     <link rel="stylesheet" href="./style/login.css">
+    
 </head>
 <body>
     <div class="screen">
@@ -33,7 +34,7 @@
                                 <input type="checkbox" class="checkbox" >Remember me
                             </span>
                             <span id="forgot">
-                                <a href="" class="forgot">Forgot Password</a>
+                                <a href="#ex1" class="forgot" rel="modal:open">Forgot Password</a>
                             </span>
                         </div>
                     </div>
@@ -52,5 +53,29 @@
             </div>
         </div>
     </div>
+    <div id="ex1" class="modal">
+        <div class="forgotpage">
+            <form action="" method="post">
+                <h1 style="margin-bottom: 15%;">Change Your Password</h1>
+                <div class="emailforgot">
+                    <input type="email" name="email" id="emailforgot" placeholder="Email">
+                </div>
+                <div class="newpass">
+                    <input type="password" name="password" id="newpass" placeholder="New password">
+                </div>
+                <div class="confirmnewpass">
+                    <input type="password" name="cpassword" id="confirmnewpass" placeholder="Confirm password">
+                </div>
+            </form>
+            <button id="change"><a href="#" rel="modal:close" style="color: white;">Change password</a></button>
+        </div>
+    </div>
+      
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </body>
 </html>

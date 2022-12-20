@@ -99,6 +99,8 @@ div.scrollmenu {
         border-radius: 10px;
         width: 190px;
         height: 40px;
+        background-color: white;
+        color: green;
     }
     .cards::before{
         content: "";

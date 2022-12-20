@@ -12,19 +12,18 @@ form{
     margin-top: 1% ;
     padding-top: 30%;
 }
+
 .arroww{
-    font-size: 5vh; 
-    color: black;
-}
-.arrow{
     z-index: 0;
     position: fixed;
     left: 10px;
-    transition: 0.3 ease;
+    transition: 0.3s ease;
     opacity: 0.8;
+    font-size: 5vh;
+    color: black;
 }
-.arrow:hover{
-    opacity: 1;
+.arroww:hover{
+    opacity: 0.3;
 }
     
 .screen{
@@ -129,9 +128,63 @@ form{
     padding: auto;
     
 }
+#create:hover{
+    text-decoration: underline;
+}
+.forgot:hover{
+    text-decoration: underline;
+}
 .create{
     margin-top:100px;
     position: relative;
     bottom: 0;
     justify-content: center;
+}
+/*Modal*/
+.forgotpage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30%;
+}
+#emailforgot{
+    width: 95%;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    padding-left: 10px;
+    margin-top: 3%;
+}
+#newpass{
+    width: 95%;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    padding-left: 10px;
+    margin-top: 3%;
+}
+#confirmnewpass{
+    width: 95%;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    padding-left: 10px;
+    margin-top: 3%;
+}
+#change{
+    width: 95%;
+    height: 35px;
+    border: none;
+    outline: none;
+    background-color: #6EC500;
+    border-radius: 15px;
+    margin-top: 8%;
 }

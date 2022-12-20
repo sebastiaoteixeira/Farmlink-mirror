@@ -133,3 +133,7 @@
         cursor: pointer;
         
     }
+
+#already:hover{
+    text-decoration: underline;
+}
