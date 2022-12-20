@@ -2,30 +2,43 @@
     position: fixed;
     z-index: 1;
     width: 100%;
+    
 }
 .gradient{
     background: linear-gradient(180deg, rgba(0,149,4,1) 0%, rgba(255,255,255,0) 100%);
 }
 .solid-color{
-        background: green
+        background: green;
+        box-shadow: 0 5px 2px -2px rgba(0,0,0,.2);
 }
 .nav-link{
     color: white;
     padding-right: 25px;
     width: 115px;
     text-align: center;
-}   
+}
 .nav-item:not(#cart,#login){
     border-radius: 30px;
     background-color: #5aa02c;
     margin-right: 30px;
     
 }
+/*horrivel*/
+    #carouselExampleIndicators, .carrousel-inner, .carousel-item{
+        min-height: 300px;
+    }
+    .carousel-item{
+        object-fit: cover;
+    }
+        
+    
+
 
 div.scrollmenu {
     background-color: #f1f1f1;
     overflow: auto;
     display: flex;
+    padding-bottom: 5px;
 }
     
 .container-fluid{
@@ -37,10 +50,10 @@ div.scrollmenu {
   }
 
 
-/*
+
 #scrollmenu::-webkit-scrollbar-track {
     border-radius: 10px;
-    background-color: #F5F5F5;
+    background-color: #c9c9c9;
 }
 
 #scrollmenu::-webkit-scrollbar {
@@ -50,14 +63,18 @@ div.scrollmenu {
 
 #scrollmenu::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #b3b3b3;
+    background-color: rgb(0, 182, 0);
 }
 
 #scrollmenu::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
-    background-color: #7e7e7e;
+    background-color: rgb(0, 163, 0);
 }
-*/
+#scrollmenu::-webkit-scrollbar-thumb:active {
+    border-radius: 10px;
+    background-color: green;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
     body{
         background-color: #f1f1f1;
@@ -67,7 +84,7 @@ div.scrollmenu {
     .cards{
         background-color: green;
         width: 300px;
-        height: 450px;
+        height: 300px;
         border-radius: 15px;
         position: relative;
         z-index: 100;
@@ -79,6 +96,13 @@ div.scrollmenu {
         flex-direction: column;
         position: relative;
         z-index: 100;
+    }
+    .nameprod{
+        padding-top: 20px;
+        
+    }
+    .nameprod h1{
+        font-size: 30px;
     }
     .imgcard{
         width: 200px;
