@@ -99,6 +99,16 @@ def getRows(tableName, condition):
     return result
 
 """
+Returns True if exists
+at least a row with that
+satisfies a condition
+"""
+def rowExists(tableName, condition):
+    if not len(getRows(tableName, condition)):
+        return False
+    return True
+
+"""
 Get a row from a table by Id
 """
 def getRowById(tableName, Id):
