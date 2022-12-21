@@ -1,4 +1,6 @@
 from http import server
+from hashlib import sha3_512
+import database
 
 hostname = '0.0.0.0'
 port = 8080
@@ -26,6 +28,22 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         except IOError:
             self.send_error(404, 'File Not Found: {}'.format(self.path))
 
+    def do_POST(self):
+        if self.path == "/login":
+            self.login()
+        elif self.path == "/register":
+            self.register()
+
+    def register(self):
+        length = int(self.headers['content-length'])
+        field_data = self.rfile.read(length).decode("UTF-8")
+        fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
+
+        database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
+
+
+    def login(self):
+        pass
 
 
 mainServer = server.HTTPServer((hostname, port), MainRequestHandler)
