@@ -39,17 +39,36 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         field_data = self.rfile.read(length).decode("UTF-8")
         fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
 
-        database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
-
+        if not database.rowExists("login", lambda row: row["email"] == fields["email"]): 
+            database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
+            self.send_response(302)
+            self.send_header('Location', '/home')
+            self.end_headers()
+        else:
+            self.send_response(400)
+            self.send_header('Content-type', "text/plain")
+            self.end_headers()
+            self.wfile.write(bytes("This Email is already registed", 'utf-8'))
+        return  
 
     def login(self):
-        pass
+        length = int(self.headers['content-length'])
+        field_data = self.rfile.read(length).decode("UTF-8")
+        fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
+        if database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
+            self.send_response(302)
+            self.send_header('Location', '/home')
+            self.end_headers()
+        else:
+            self.send_response(400)
+            self.send_header('Content-type', "text/plain")
+            self.end_headers()
+            self.wfile.write(bytes("Email or password invalid", 'utf-8'))
 
 
 mainServer = server.HTTPServer((hostname, port), MainRequestHandler)
 
 print("\n\tStarting server at:  ", hostname, ":", port, "\n", sep="")
-
 
 try:
     mainServer.serve_forever()
