@@ -88,7 +88,7 @@ that satisfies a condition
 ex: getRows("login", lambda row: row["id"] == 7)
 """
 def getRows(tableName, condition):
-    assert tableExists(tableName):
+    assert tableExists(tableName), "Table not exists"
     
     data = readTable(tableName)["tableRows"]
     result = []
