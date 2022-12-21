@@ -19,17 +19,17 @@
 }
 .nav-item:not(#cart,#login){
     border-radius: 30px;
-    background-color: #5aa02c;
+    background-color: #548235;
     margin-right: 30px;
     
 }
 /*horrivel*/
-    #carouselExampleIndicators, .carrousel-inner, .carousel-item{
+   /* #carouselExampleIndicators, .carrousel-inner, .carousel-item{
         min-height: 300px;
     }
     .carousel-item{
         object-fit: cover;
-    }
+    }*/
         
     
 
@@ -63,16 +63,16 @@ div.scrollmenu {
 
 #scrollmenu::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: rgb(0, 182, 0);
+    background-color: rgb(0, 165, 0);
 }
 
 #scrollmenu::-webkit-scrollbar-thumb:hover {
     border-radius: 10px;
-    background-color: rgb(0, 163, 0);
+    background-color: rgb(0, 139, 0);
 }
 #scrollmenu::-webkit-scrollbar-thumb:active {
     border-radius: 10px;
-    background-color: green;
+    background-color: rgb(0, 112, 0);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
