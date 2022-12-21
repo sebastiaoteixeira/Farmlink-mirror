@@ -73,6 +73,8 @@ def addRow(tableName, row):
 
     writeTable(tableName, table)
 
+    return row
+
 """
 Get tables list
 """

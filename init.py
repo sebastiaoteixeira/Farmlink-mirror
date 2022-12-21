@@ -1,6 +1,8 @@
 from http import server
 from hashlib import sha3_512
 import database
+import random
+import time
 
 hostname = '0.0.0.0'
 port = 8080
@@ -40,8 +42,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
 
         if not database.rowExists("login", lambda row: row["email"] == fields["email"]): 
-            database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
+            loginData = database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
             self.send_response(302)
+            self.createSession(loginData["id"])
             self.send_header('Location', '/home')
             self.end_headers()
         else:
@@ -57,6 +60,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
         if database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
+            self.createSession(database.getRows("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest())[0]["id"])
             self.send_header('Location', '/home')
             self.end_headers()
         else:
@@ -64,6 +68,13 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-type', "text/plain")
             self.end_headers()
             self.wfile.write(bytes("Email or password invalid", 'utf-8'))
+    
+    def createSession(self, userId, remember=False):
+        milis = int(time.time() / 1000) + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
+        sessionId = hex(random.getrandbits(128))[2:]
+        database.addRow("sessions", {"userId": userId, "sessionId": sessionId, "expire": milis})
+        self.send_header('set-cookie', "sessionId=" + sessionId)
+
 
 
 mainServer = server.HTTPServer((hostname, port), MainRequestHandler)
