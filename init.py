@@ -58,7 +58,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         length = int(self.headers['content-length'])
         field_data = self.rfile.read(length).decode("UTF-8")
         fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
-        if database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
+        if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
             self.createSession(database.getRows("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest())[0]["id"])
             self.send_header('Location', '/home')
@@ -68,6 +68,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-type', "text/plain")
             self.end_headers()
             self.wfile.write(bytes("Email or password invalid", 'utf-8'))
+        return
     
     def createSession(self, userId, remember=False):
         milis = int(time.time() / 1000) + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
