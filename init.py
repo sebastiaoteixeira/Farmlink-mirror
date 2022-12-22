@@ -35,6 +35,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.login()
         elif self.path == "/register":
             self.register()
+        elif self.path == "/verifySession":
+            self.verifySession()
 
     def getFields(self):
         length = int(self.headers['content-length'])
@@ -77,6 +79,14 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         database.addRow("sessions", {"userId": userId, "sessionId": sessionId, "expire": milis})
         self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
+    def verifySession(self):
+        fields = self.getFields()
+        if database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == fields["sessionId"]):
+            self.send_response(200)
+        else:
+            self.send_response(400)
+        self.end_headers()
+        return
 
 
 mainServer = server.HTTPServer((hostname, port), MainRequestHandler)
