@@ -36,11 +36,14 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         elif self.path == "/register":
             self.register()
 
-    def register(self):
+    def getFields(self):
         length = int(self.headers['content-length'])
         field_data = self.rfile.read(length).decode("UTF-8")
-        fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
+        fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
+        return fields
 
+    def register(self):
+        fields = self.getFields()
         if not database.rowExists("login", lambda row: row["email"] == fields["email"]): 
             loginData = database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()})
             self.send_response(302)
@@ -55,12 +58,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return  
 
     def login(self):
-        length = int(self.headers['content-length'])
-        field_data = self.rfile.read(length).decode("UTF-8")
-        fields = {name : value for name, value in (item.split("=") for item in field_data.split("&"))}
+        fields = self.getFields()
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
-            self.createSession(database.getRows("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest())[0]["id"])
+            self.createSession(database.getRows("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest())[0]["id"], fields.get("remember"))
             self.send_header('Location', '/home')
             self.end_headers()
         else:
@@ -71,10 +72,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return
     
     def createSession(self, userId, remember=False):
-        milis = int(time.time() / 1000) + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
+        milis = int(time.time() * 1000) + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
         sessionId = hex(random.getrandbits(128))[2:]
         database.addRow("sessions", {"userId": userId, "sessionId": sessionId, "expire": milis})
-        self.send_header('set-cookie', "sessionId=" + sessionId)
+        self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
 
 
