@@ -3,13 +3,19 @@ from hashlib import sha3_512
 import database
 import random
 import time
+#import logging
+#logging.getLogger("requests").setLevel(logging.CRITICAL)
+
+
+def getMillis():
+    return int(time.time() * 1000)
+
 
 hostname = '0.0.0.0'
 port = 8080
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        print("Request Received: ", self.path)
         path = '/home.html' if self.path == '/' else self.path
         if path.count('.') == 0:
             path += '.html'
@@ -37,6 +43,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.register()
         elif self.path == "/verifySession":
             self.verifySession()
+        elif self.path == "/personalData":
+            self.getPersonalData()
 
     def getFields(self):
         length = int(self.headers['content-length'])
@@ -74,22 +82,39 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return
     
     def createSession(self, userId, remember=False):
-        milis = int(time.time() * 1000) + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
+        milis = getMillis() + 86400000 * (30 if remember else 1) ### Convert micros to millis UNIX-Standard and add 1 day
         sessionId = hex(random.getrandbits(128))[2:]
         database.addRow("sessions", {"userId": userId, "sessionId": sessionId, "expire": milis})
         self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
     def verifySession(self):
         fields = self.getFields()
-        if database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == fields["sessionId"]):
-            self.send_response(200)
+        if database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == fields["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["expire"]:
+            res = "true"
         else:
-            self.send_response(400)
+            res = "false"
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
         self.end_headers()
+        self.wfile.write(bytes('{"isValid": ' + res + '}', 'utf-8'))
         return
 
+    def getPersonalData(self):
+        fields = self.getFields()
+        if database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == fields["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["expire"]:
+            userId = database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["userId"]
+            personalData = database.getRowById("login", userId)
+            personalData["password"] = None
+            self.send_response(200)
+            self.send_header('Content-type', "application/json")
+            self.end_headers()
+            self.wfile.write(bytes(database.json.dumps(personalData), 'utf-8'))
+        else:
+            self.send_response(400)
+            self.end_headers()
+        return            
 
-mainServer = server.HTTPServer((hostname, port), MainRequestHandler)
+mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
 
 print("\n\tStarting server at:  ", hostname, ":", port, "\n", sep="")
 
