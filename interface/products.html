@@ -58,16 +58,25 @@
       </div>
     </div>
   </nav>
+
   <!--CONTENT-->
-  
   <div class="container">
-    <div class="products-container" data-bind="foreach: products">
-      <!-- ko if: visible == "true" -->
+    <div class="products-container" ><!--data-bind="foreach: products"-->
       <div class="product">
-          <h2 data-bind="text: name"></h2>
-          <h4 data-bind="text: price"></h4>
+        <div class="imgprod">
+          <img class="imagemprod" src="./Images/ameixa.jpg" data-bind="attr:{src: img}" alt="">
+        </div>
+        <hr style="color: black;">
+        <div class="nameprod">
+          <h1 data-bind="text: name">Produto</h1>
+        </div>
+        <div class="priceprod">
+          <h2 data-bind="text: price">Preço</h2>
+        </div>
+        <div class="addcart">
+          <input type="button" class="addcarrinho" value="Add to cart">
+        </div>
       </div>
-      <!-- /ko -->
     </div> 
   </div>
   <script>
