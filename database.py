@@ -30,9 +30,9 @@ def tableExists(table):
 """
 Create a new table
 """
-def createTable(table):
+def createTable(table, public=False):
     with open(tablePath(table), 'x') as f:
-        f.write('{"lastId": 0, "tableRows": []}')
+        f.write('{"lastId": 0, "public": ' + ('true' if public else 'false') + ', "tableRows": []}')
     
     return True
     
@@ -83,6 +83,12 @@ def getTables():
     for t in tables:
         t = t[:-5]
     return t
+
+def isPublic(tableName):
+    assert tableExists(tableName), "Table not exists"
+    
+    data = readTable(tableName)["public"]
+    return data
 
 """
 Get rows from a table
