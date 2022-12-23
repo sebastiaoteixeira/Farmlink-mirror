@@ -49,6 +49,7 @@ body{
 .imagemprod{
     width: 200px;
     height: 190px;
+    object-fit: contain;
 }
 .addcarrinho{
     border: none;
