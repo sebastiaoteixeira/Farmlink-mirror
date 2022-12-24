@@ -15,18 +15,20 @@
     <title>FarmLink</title>
     <!--CSS-->
     <link rel="stylesheet" href="./style/home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"/>
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <!-- JS -->
     <script src="scripts/login.js"></script>
+    <style> @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap'); </style>
 </head>
 <body>
   <!--NAVBAR-->
   <div>
-    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light gradient" style="height: 65; z-index: 2;">
+    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent gradient" style="height: 65; z-index: 2;">
         <div class="container-fluid">
           <a class="navbar-brand" href="./home.html">
-            <img src="./Images/LogoBranco.png" alt="LogoVerde" width="104" height="55">
+            <img src="./Images/LogoPreto1.png" alt="LogoPreto" width="104" height="55">
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
             <span class="navbar-toggler-icon"></span>
@@ -45,132 +47,290 @@
               <li class="nav-item" id="cart">
                 <a class="nav-link" href="./cart.html" style="width: 50px; color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
               </li>
-              <li class="nav-item" id="login">
-                <a class="nav-link" href="./login.html" style="width: 75px; color: white; font-size: 30px;"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-              </li>
             </ul>
             <form class="d-flex">
-              <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px; outline: none; border: none; border-radius: 30px;">
-              <button class="btn" type="button" style="height: 40px; color: white;"><i class="fa fa-search" aria-hidden="true"></i>
+              <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px; border: black solid 2px; border-radius: 30px;">
+              <button class="btn" type="button" style="height: 40px;color: black; padding-right: 20px"><i class="fa fa-search" aria-hidden="true"></i>
               </button>
             </form>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="./login.html">Login</a>
+              </li>
+              <li class="nav-item" style="background-color: black;">
+                <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
+              </li>
+            </ul>
           </div>
         </div>
     </nav>
   </div>
-  <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  <div class="background">
+    <img src="./Images/background1.png" style="height: 79%; width: 100%;"alt="">
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class="destaques" style="text-align: center;color: #6EC500; font-size: 75px;font-family: 'Archivo Black', sans-serif;">Destaques</div>
+    <div class="container">
+      <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/kiwi.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Kiwi</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/banana.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Banana</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color: white; color: #6EC500;"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/diospiro.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Diospiro</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/maca.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Maçã</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/macagolden.webp" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Maçã Golden</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/laranja.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Laranja</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/ameixa.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Ameixa</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/pera.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Pêra</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="cardscontent">
+              <div class="imgcard">
+                <img src="./Images/pessego.jpg" class="prodimg" alt="">
+              </div>
+              <div class="nameprod">
+                <h1 style="font-size: 20px; color: white; margin-top: 15px;">Pêssego</h1>
+              </div>
+              <div class="descprod">
+                <h2 style="font-size: 15px;color: white;">Fruta proveniente da quinta do João Maria</h2>
+              </div>
+              <div class="rating">
+                <div>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                </div>
+              </div>
+              <div class="addcart">
+                <input type="button" style="margin-top: 20px; background-color:white; color: #6EC500"value="Adicionar ao Carrinho">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next" style="color: white;"></div>
+        <div class="swiper-button-prev" style="color: white;"></div>
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="./Images/slide6.png" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="./Images/slide6.png" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="./Images/slide6.png" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
   </div>
   <br>
   <br>
   <br>
   <br>
-  <br>
-  <!--CONTENT-->
-  <div class="container">
-    <div class="scrollmenu" id="scrollmenu">
-      <div class="cardcontainer">
-        <div class="cards">
-          <div class="cardcontent">
-              <div >
-                  <img src="./Images/kiwi.jpg" alt="" class="imgcard">
-              </div>
-              <div class="nameprod">
-                  <h1 style="color: white;">Kiwi</h1>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="cardcontainer">
-        <div class="cards">
-          <div class="cardcontent">
-              <div >
-                  <img src="./Images/banana.jpg" alt="" class="imgcard">
-              </div>
-              <div class="nameprod">
-                  <h1 style="color: white;">Banana</h1>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="cardcontainer">
-        <div class="cards">
-          <div class="cardcontent">
-              <div >
-                  <img src="./Images/pessego.jpg" alt="" class="imgcard">
-              </div>
-              <div class="nameprod">
-                  <h1 style="color: white;">Peach</h1>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="cardcontainer">
-        <div class="cards">
-          <div class="cardcontent">
-              <div >
-                  <img src="./Images/laranja.jpg" alt="" class="imgcard">
-              </div>
-              <div class="nameprod">
-                  <h1 style="color: white;">Orange</h1>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="cardcontainer">
-        <div class="cards">
-          <div class="cardcontent">
-              <div >
-                  <img src="./Images/diospiro.jpg" alt="" class="imgcard">
-              </div>
-              <div class="nameprod">
-                  <h1 style="color: white;">Persimmon</h1>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> 
-  <br>
-  <br>
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Initialize Swiper -->
   <script>
-    window.onscroll = function() {scrollFunction()};
-
-  function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("navbar_top").classList.remove('gradient');
-    document.getElementById('navbar_top').classList.add('solid-color');
-
-  } 
-  else {
-    document.getElementById('navbar_top').classList.remove('solid-color');
-    document.getElementById('navbar_top').classList.add('gradient');
-
-  }
-  }
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 3,
+      spaceBetween: 30,
+      slidesPerGroup: 3,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
   </script>
 </body>
 </html>
