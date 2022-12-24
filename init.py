@@ -79,7 +79,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             if self.path.count("?"):
                 field_data = self.path.split("?")[1]
             else:
-                field_data = ""
+                field_data = "_=null"
         self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
 
     def getCookies(self):
