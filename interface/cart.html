@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="./style/cart.css">
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- Jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
+    <!-- KnockoutJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
 </head>
 <body>
     <!--NAVBAR-->
@@ -68,18 +73,47 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody data-bind="foreach: products">
         <tr style="vertical-align: middle;">
-          <th scope="row">1</th>
-          <td><div id="square"></div></td>
-          <td>{productName}</td>
-          <td>{quantity}</td>
-          <td>{price}</td>
-          <td><button class="btn btn-danger">X</button></td>
+          <th scope="row" data-bind="text: ($index() + 1)">1</th>
+          <td>
+          <div id="square"></div></td>
+          <td data-bind="text: name"></td>
+          <td data-bind="text: qty"></td>
+          <td data-bind="text: price"></td>
+          <td><button class="btn btn-danger" data-bind="click: $parent.removeProduct">X</button></td>
         </tr>
 
       </tbody>
     </table>
   </div>
+  <script>
+    function Cart() {
+      this.products = ko.observableArray([]);
+      this.updateCart = () => {
+        let products_index = JSON.parse(localStorage.getItem("cart"))
+        this.products.removeAll();
+        for (let i = 0; i < products_index.length; i++) {           
+          $.get("get/products?id=" + products_index[i]["id"], (result) => {
+            let cartElement = result[0]
+            cartElement.qty = products_index[i]["qty"]
+            this.products.push(cartElement);  
+          }); 
+        }
+      }
+      this.removeProduct = (product) => {
+        let products_index = JSON.parse(localStorage.getItem("cart"))
+        products_index = products_index.filter((value) => { return value["id"] != product["id"] })
+        localStorage.setItem("cart", JSON.stringify(products_index))
+        this.updateCart();
+      }
+      this.clearCart = () => {
+        localStorage.removeItem("cart")
+      }
+    }
+    var cart = new Cart()
+    cart.updateCart()
+    ko.applyBindings(cart);
+  </script>
 </body>
 </html>

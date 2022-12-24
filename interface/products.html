@@ -74,7 +74,7 @@
           <h2 data-bind="text: price">Preço</h2>
         </div>
         <div class="addcart">
-          <input type="button" class="addcarrinho" value="Add to cart">
+          <input type="button" class="addcarrinho" value="Add to cart" data-bind="click: $parent.addToCart">
         </div>
       </div>
     </div> 
@@ -83,9 +83,17 @@
     function VM() {
       this.products = ko.observableArray([]);
       this.updateProducts = () => {
-        $.get("getproducts", (result) => {
+        $.get("get/products", (result) => {
           this.products(result);  
         });
+      }
+      this.addToCart = (product) => {
+        let cart = JSON.parse(localStorage.getItem("cart"));
+        if (!cart) {
+          cart = [];
+        }
+        cart.push({"id": product["id"], "qty": 1});
+        localStorage.setItem("cart", JSON.stringify(cart));
       }
     }
     var viewModel = new VM();
