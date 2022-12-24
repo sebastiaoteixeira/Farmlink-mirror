@@ -54,6 +54,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.login()
         elif self.path == "/register":
             self.register()
+        elif self.path == "/registerProducer":
+            userId = self.register()
+            self.registerProducer(userId)
         elif self.path == "/verifySession":
             self.verifySession()
         elif self.path == "/personalData":
@@ -68,32 +71,35 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
 
     def register(self):
-        fields = self.fields
-        if not database.tableExists("login") or not database.rowExists("login", lambda row: row["email"] == fields["email"]): 
-            loginData = database.addRow("login", {"name": fields["fname"], "email": fields["email"], "password": sha3_512(bytes(fields["password"], 'utf-8')).hexdigest(), "producer": fields.get("producer")})
+        if not database.tableExists("login") or not database.rowExists("login", lambda row: row["email"] == self.fields["email"]): 
+            loginData = database.addRow("login", {"name": self.fields["fname"], "email": self.fields["email"], "password": sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest(), "producer": self.fields.get("producer")})
             self.send_response(302)
             self.createSession(loginData["id"])
             self.send_header('Location', '/home')
             self.end_headers()
         else:
-            self.send_response(400)
-            self.send_header('Content-type', "text/plain")
-            self.end_headers()
-            self.wfile.write(bytes("This Email is already registed", 'utf-8'))
-        return  
+            self.send_error(400, "This Email is already registed")
+        return loginData["id"]
+
+    def registerProducer(self, userId):
+        if not database.tableExists("producer"):
+            database.createTable("producer", True)
+        producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo"), "userId": userId})
+        self.send_response(200)
+        self.send_header('Location', "/producer")
+        self.end_headers()
+        return
+
+
 
     def login(self):
-        fields = self.fields
-        if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest()): 
+        if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
-            self.createSession(database.getRows("login", lambda row: row["email"] == fields["email"] and row["password"] == sha3_512(bytes(fields["password"], 'utf-8')).hexdigest())[0]["id"], fields.get("remember"))
+            self.createSession(database.getRows("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest())[0]["id"], self.fields.get("remember"))
             self.send_header('Location', '/home')
             self.end_headers()
         else:
-            self.send_response(400)
-            self.send_header('Content-type', "text/plain")
-            self.end_headers()
-            self.wfile.write(bytes("Email or password invalid", 'utf-8'))
+            self.send_error(400, "Email or password invalid")
         return
     
     def createSession(self, userId, remember=False):
@@ -103,11 +109,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
     def isSessionValid(self):
-        fields = self.fields
-        return database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == fields["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["expire"]
+        return database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == self.fields["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["expire"]
 
     def verifySession(self):
-        fields = self.fields
         res = "true" if self.isSessionValid() else "false"
         self.send_response(200)
         self.send_header('Content-type', "application/json")
@@ -116,9 +120,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return
 
     def getPersonalData(self):
-        fields = self.fields
         if self.isSessionValid():
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["userId"]
+            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["userId"]
             personalData = database.getRowById("login", userId)
             personalData["password"] = None
             self.send_response(200)
@@ -136,12 +139,11 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def addNewProduct(self):
         if self.isSessionValid():
-            fields = self.fields
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == fields["sessionId"])[0]["userId"]
+            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["userId"]
             if self.isProducer(userId):
                 if not database.tableExists("products"):
                     database.createTable("products", True)
-                product = database.addRow("products", {"name": fields.get("name"), "type": fields.get("type"), "price": fields.get("price"), "stock": fields.get("stock"), "img": fields.get("img"), "visible": fields.get("visible"), "producerId": userId})
+                product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
                 self.send_response(200)
                 self.send_header('Content-type', "application/json")
                 self.end_headers()
