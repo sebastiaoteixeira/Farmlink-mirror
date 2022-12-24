@@ -73,7 +73,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def getCookies(self):
         cookie_data = self.headers['Cookie']
-        if not None:
+        if cookie_data is not None:
             self.cookies = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in cookie_data.split("; "))}
         else:
             self.cookies = {}
@@ -98,8 +98,6 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.end_headers()
         return
 
-
-
     def login(self):
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
@@ -116,6 +114,15 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         database.addRow("sessions", {"userId": userId, "sessionId": sessionId, "expire": milis})
         self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
+    def onlyLogged(func):
+        def inner(self):
+            if self.isSessionValid():
+                return func(self)
+            else:
+                self.send_error(401, 'Login is needed')
+        return inner
+                
+
     def isSessionValid(self):
         return database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == self.cookies.get("sessionId"))[0]["expire"]
 
@@ -127,39 +134,34 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.wfile.write(bytes('{"isValid": ' + res + '}', 'utf-8'))
         return
 
+    @onlyLogged
     def getPersonalData(self):
-        if self.isSessionValid():
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
-            personalData = database.getRowById("login", userId)
-            personalData["password"] = None
-            self.send_response(200)
-            self.send_header('Content-type', "application/json")
-            self.end_headers()
-            self.wfile.write(bytes(database.json.dumps(personalData), 'utf-8'))
-        else:
-            self.send_error(401, 'Login is needed')
-        return
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        personalData = database.getRowById("login", userId)
+        personalData["password"] = None
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
+        self.end_headers()
+        self.wfile.write(bytes(database.json.dumps(personalData), 'utf-8'))
 
     def isProducer(self, userId):
         if database.tableExists("login") and database.getRowById("login", userId).get("producer"):
             return True
         return False
 
+    @onlyLogged
     def addNewProduct(self):
-        if self.isSessionValid():
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
-            if self.isProducer(userId):
-                if not database.tableExists("products"):
-                    database.createTable("products", True)
-                product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
-                self.send_response(200)
-                self.send_header('Content-type', "application/json")
-                self.end_headers()
-                self.wfile.write(bytes(database.json.dumps(product)))
-            else:
-                self.send_error(403, 'Only producers can add new products')
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        if self.isProducer(userId):
+            if not database.tableExists("products"):
+                database.createTable("products", True)
+            product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
+            self.send_response(200)
+            self.send_header('Content-type', "application/json")
+            self.end_headers()
+            self.wfile.write(bytes(database.json.dumps(product)))
         else:
-             self.send_error(401, 'Login is needed')
+            self.send_error(403, 'Only producers can add new products')
 
 
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
