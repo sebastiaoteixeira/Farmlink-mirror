@@ -128,7 +128,7 @@ def getAllRows(tableName):
     """
     return getRows(tableName, lambda row: True)
 
-def removeRow(tableName, row):
+def removeRow(tableName, rowId):
     """
     Delete a row
     """
@@ -136,15 +136,10 @@ def removeRow(tableName, row):
         createTable(tableName)
 
     table = readTable(tableName)
-
-    lastId = table["lastId"]
-
-    data = table["tableRows"]
-    row["id"] = lastId
-    data.append(row)
+    deletedRow = getRowById(tableName, rowId)
+    table["tableRows"] = list(filter(lambda row: row["id"] != rowId, table["tableRows"]))
     
-    table["lastId"] += 1
-
     writeTable(tableName, table)
-
+    
+    return deletedRow
 
