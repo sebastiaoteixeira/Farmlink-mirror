@@ -2,22 +2,19 @@ function loginVM() {
     this.logged = false
     this.loginData = {}
     this.validate = () => {
+        this.logged = false
         if ($.cookie("sessionId")) {
             $.post(
                 "/verifySession", 
-                {
-                    sessionId: $.cookie("sessionId")
-                },
+                {"null": null},
                 (result) => {
                     this.logged = result["isValid"];
+                    this.updateLoginData()
                 }
             ); 
-        } else {
-            this.logged = false;
         }
     }
     this.updateLoginData = () => {
-        this.validate()
         if (this.logged) {
             $.post(
                 "/personalData",

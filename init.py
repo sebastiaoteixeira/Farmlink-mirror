@@ -50,6 +50,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         self.getFields()
+        self.getCookies()
         if self.path == "/login":
             self.login()
         elif self.path == "/register":
@@ -69,6 +70,13 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         length = int(self.headers['content-length'])
         field_data = urllib.parse.unquote_plus(self.rfile.read(length).decode("UTF-8"))
         self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
+
+    def getCookies(self):
+        cookie_data = self.headers['Cookie']
+        if not None:
+            self.cookies = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in cookie_data.split("; "))}
+        else:
+            self.cookies = {}
 
     def register(self):
         if not database.tableExists("login") or not database.rowExists("login", lambda row: row["email"] == self.fields["email"]): 
@@ -109,7 +117,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.send_header('set-cookie', "sessionId=" + sessionId + ("; Expires=" + time.strftime("%a, %d %b %Y %H:%M:%S GMT", time.gmtime(milis/1000)) if remember else ""))
 
     def isSessionValid(self):
-        return database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == self.fields["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["expire"]
+        return database.tableExists("sessions") and database.rowExists("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"]) and getMillis() < database.getRows("sessions", lambda row: row["sessionId"] == self.cookies.get("sessionId"))[0]["expire"]
 
     def verifySession(self):
         res = "true" if self.isSessionValid() else "false"
@@ -121,7 +129,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def getPersonalData(self):
         if self.isSessionValid():
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["userId"]
+            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
             personalData = database.getRowById("login", userId)
             personalData["password"] = None
             self.send_response(200)
@@ -139,7 +147,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def addNewProduct(self):
         if self.isSessionValid():
-            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.fields["sessionId"])[0]["userId"]
+            userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
             if self.isProducer(userId):
                 if not database.tableExists("products"):
                     database.createTable("products", True)
