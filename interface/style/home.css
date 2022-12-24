@@ -1,10 +1,10 @@
-#navbar_top{
+/*#navbar_top{
     position: fixed;
     z-index: 1;
     width: 100%;
     
-}
-.gradient{
+}*/
+/*.gradient{
     background: linear-gradient(180deg, rgba(0,149,4,1) 0%, rgba(255,255,255,0) 100%);
 }
 .solid-color{
@@ -33,7 +33,7 @@
         
     
 
-
+/*
 div.scrollmenu {
     background-color: #f1f1f1;
     overflow: auto;
@@ -73,68 +73,102 @@ div.scrollmenu {
 #scrollmenu::-webkit-scrollbar-thumb:active {
     border-radius: 10px;
     background-color: rgb(0, 112, 0);
+}*/
+
+
+body{
+background-color: white;
+
+}
+.nav-link{
+    color: white;
+    padding-right: 25px;
+    width: 115px;
+    text-align: center;
+}   
+
+.nav-item:not(#cart,#login){
+    border-radius: 30px;
+    background-color: #6EC500;
+    margin-right: 30px;
+    color: white;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
-    body{
-        background-color: #f1f1f1;
-        font-family: 'Inter', sans-serif;
 
-    }
-    .cards{
-        background-color: green;
-        width: 300px;
-        height: 300px;
-        border-radius: 15px;
-        position: relative;
-        z-index: 100;
-    }
-    .cardcontent{
-        text-align: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        z-index: 100;
-    }
-    .nameprod{
-        padding-top: 20px;
-        
-    }
-    .nameprod h1{
-        font-size: 30px;
-    }
-    .imgcard{
-        width: 200px;
-        height: 200px;
-        border-radius: 15px;
-        margin-top: 20px;
-    }
-    .rating{
-        color: white;
-        margin-top: 30px;
-    }
-    .addcart{
-        margin-top: 15px;
-    }
-    input{
-        outline: none;
-        border: none;
-        border-radius: 10px;
-        width: 190px;
-        height: 40px;
-        background-color: white;
-        color: green;
-    }
-    .cards::before{
-        content: "";
-        height: 191px;
-        width: 300px;
-        background-color: white;
-        position: absolute;
-        top: 0px;
-        border-radius: 15px 15px 0 0;
-    }
-    .cardcontainer{
-        margin: 0 10px;
-    }
+#right{
+    margin-left: auto;
+}
+.background{
+  background-image: url(./farmLink/interface/Images/back1.png);
+}
+.swiper-slide{
+    background-color: #6EC500;
+    width: 335px;
+    height: 465px;
+    border-radius: 15px;
+    position: relative;
+    z-index: 100;
+    border: #6EC500;
+}
+.cardscontent{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 100;
+}
+.prodimg{
+    width: 200px;
+    height: 200px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.rating{
+    color: white;
+    margin-top: 30px;
+}
+.addcart{
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+input{
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    width: 190px;
+    height: 40px;
+}
+.swiper-slide::before{
+    content: "";
+    height: 175px;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 0px;
+    border-radius: 15px 15px 0 0;
+    border: #6EC500 solid 2px;
+}
+.swiper-button-prev {
+    color: white;
+}
+.swiper-button-next{
+    color: white;
+}
+.swiper-pagination-bullet-active{
+    width: 35px;
+    border-radius: 5px;
+    background-color: white;
+}
+.swiper-pagination-bullet{
+    width: 35px;
+    border-radius: 5px;
+    color: white;
+  
+}
+.swiper-pagination {
+    margin-top: 10px;
+}
+:root{
+    --swiper-theme-color: #FFF;
+}
