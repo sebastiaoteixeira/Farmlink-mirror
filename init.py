@@ -17,13 +17,18 @@ port = 8080
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path.count("/get"):
-            table = self.path.replace("/get", "")
+        if self.path.count("/get/"):
+            self.getFields()
+            table = self.path.split("/")[2].split("?")[0]
             if database.tableExists(table) and database.isPublic(table):
                 self.send_response(200)
                 self.send_header('Content-type', "application/json")
                 self.end_headers()
-                self.wfile.write(bytes(database.json.dumps(database.getAllRows(table)), 'utf-8'))
+                if not self.path.count("?"):
+                    self.wfile.write(bytes(database.json.dumps(database.getAllRows(table)), 'utf-8'))
+                else:
+                    conditions = lambda row: all([self.fields[key] == row[key] for key in self.fields.keys()])
+                    self.wfile.write(bytes(database.json.dumps(database.getRows(table, conditions)), 'utf-8'))
             else:
                 self.send_error(403, "Requested table is not public")
             return
@@ -49,7 +54,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: {}'.format(self.path))
 
     def do_POST(self):
-        self.getFields()
+        self.getFields(post=True)
         self.getCookies()
         if self.path == "/login":
             self.login()
@@ -66,9 +71,15 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.addNewProduct()
         return
 
-    def getFields(self):
-        length = int(self.headers['content-length'])
-        field_data = urllib.parse.unquote_plus(self.rfile.read(length).decode("UTF-8"))
+    def getFields(self, post=False):
+        if post:
+            length = int(self.headers['content-length'])
+            field_data = urllib.parse.unquote_plus(self.rfile.read(length).decode("UTF-8"))
+        else:
+            if self.path.count("?"):
+                field_data = self.path.split("?")[1]
+            else:
+                field_data = ""
         self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
 
     def getCookies(self):
@@ -121,6 +132,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             else:
                 self.send_error(401, 'Login is needed')
         return inner
+
+    def onlyProducer(func):
+        def inner():
+            pass
                 
 
     def isSessionValid(self):
