@@ -5,6 +5,7 @@ import random
 import time
 import urllib
 import sys
+import os
 #import logging
 #logging.getLogger("requests").setLevel(logging.CRITICAL)
 
