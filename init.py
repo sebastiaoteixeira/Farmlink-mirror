@@ -25,17 +25,20 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if self.path.count("/get/"):
             self.getFields()
             table = self.path.split("/")[2].split("?")[0]
-            if database.tableExists(table) and database.isPublic(table):
-                self.send_response(200)
-                self.send_header('Content-type', "application/json")
-                self.end_headers()
-                if not self.path.count("?"):
-                    self.wfile.write(bytes(database.json.dumps(database.getAllRows(table)), 'utf-8'))
+            if database.tableExists(table):
+                if database.isPublic(table):
+                    self.send_response(200)
+                    self.send_header('Content-type', "application/json")
+                    self.end_headers()
+                    if not self.path.count("?"):
+                        self.wfile.write(bytes(database.json.dumps(database.getAllRows(table)), 'utf-8'))
+                    else:
+                        conditions = lambda row: all([self.fields[key] == row[key] for key in self.fields.keys() if row.get(key)]) and any([row[key].count(self.fields["q"]) for key in row if isinstance(row[key], str)])
+                        self.wfile.write(bytes(database.json.dumps(database.getRows(table, conditions)), 'utf-8'))
                 else:
-                    conditions = lambda row: all([self.fields[key] == row[key] for key in self.fields.keys()])
-                    self.wfile.write(bytes(database.json.dumps(database.getRows(table, conditions)), 'utf-8'))
+                    self.send_error(403, "Requested table is not public")
             else:
-                self.send_error(403, "Requested table is not public")
+                self.send_error(404, "Requested table not exists")
             return
 
         path = '/home.html' if self.path == '/' else self.path
@@ -79,12 +82,13 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def getFields(self, post=False):
         if post:
             length = int(self.headers['content-length'])
-            field_data = urllib.parse.unquote_plus(self.rfile.read(length).decode("UTF-8"))
+            field_data = self.rfile.read(length).decode("UTF-8")
         else:
             if self.path.count("?"):
                 field_data = self.path.split("?")[1]
             else:
                 field_data = "_=null"
+        field_data = urllib.parse.unquote_plus(field_data)
         self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
 
     def getCookies(self):
