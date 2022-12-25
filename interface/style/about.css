@@ -1,3 +1,4 @@
+/*NavBar*/
 .nav-link{
     color: white;
     padding-right: 25px;
@@ -7,18 +8,39 @@
 
 .nav-item:not(#cart,#login){
     border-radius: 30px;
-    background-color: #5aa02c;
+    background-color: #6EC500;
     margin-right: 30px;
+    color: white;
 }
 
-#navbar_top{
-    height: 70px;
-}
 
 #right{
     margin-left: auto;
 }
-
+/**/
 body{
-    background-color:rgb(241, 234, 234);
+    background-color: white;
 }
+/*Footer*/
+footer {
+    text-align: center;
+    padding: 3px;
+    
+    color: white;
+    width: 80%;
+    margin: auto;
+    
+  }
+.stakeholders{
+    text-decoration: none;
+    float: left;
+}
+.footer{
+    display: flex;
+    padding: 25px;
+}
+.socials{
+    align-items:flex-end;
+    padding-left: 82%;
+}
+/**/

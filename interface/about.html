@@ -17,41 +17,97 @@
 </head>
 <body>
   <!--NAVBAR-->
-  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light" style="background-color: #6EC500;">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="./home.html">
-        <img src="./Images/LogoBranco1.png" alt="LogoVerde" width="104" height="55">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="./home.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./products.html">Products</a>
-          </li>
-          <li class="nav-item" id="about" style="height: 40px;">
-            <a class="nav-link" href="./about.html">About</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav" id="right">
-          <li class="nav-item" id="cart">
-            <a class="nav-link" href="./cart.html" style="width: 50px; color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
-          </li>
-          <li class="nav-item" id="login">
-            <a class="nav-link" href="./login.html" style="width: 75px; color: white; font-size: 30px;"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px">
-          <button class="btn" type="button" style="height: 40px;color: white;"><i class="fa fa-search" aria-hidden="true"></i>
+  <div>
+    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent gradient" style="height: 65; z-index: 2;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="./home.html">
+            <img src="./Images/LogoPreto1.png" alt="LogoPreto" width="104" height="55">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+            <span class="navbar-toggler-icon"></span>
           </button>
-        </form>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" aria-current="page" href="./home.html">Home</a></li>
+              <li class="nav-item">
+                <a class="nav-link" href="./products.html">Products</a>
+              </li>
+              <li class="nav-item" id="about" style="height: 40px;">
+                <a class="nav-link" href="./about.html">About</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav" id="right">
+              <li class="nav-item" id="cart">
+                <a class="nav-link" href="./cart.html" style="width: 50px; color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px; border: black solid 2px; border-radius: 30px;">
+              <button class="btn" type="button" style="height: 40px;color: black; padding-right: 20px"><i class="fa fa-search" aria-hidden="true"></i>
+              </button>
+            </form>
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="./login.html">Login</a>
+              </li>
+              <li class="nav-item" style="background-color: black;">
+                <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </nav>
+  </div>
+  <br>
+  <div class="container">
+    <div class="aboutcontent" >
+      <div class="linha1" style="display: flex; margin-bottom: 15px;">
+        <div class="farmimg">
+          <img src="./Images/line1.png" style="width: 750px; height: 750px; border-radius: 15px;" alt="">
+        </div>
+        <div class="farmtext" style="width: 750px; height: 750px; border-radius: 15px;background-color: #f1f1f1; margin-left:  15px;">
+          <h1 style="margin-top: 15px; text-align: center;">Produtores</h1>
+          <p></p>
+        </div>
+      </div>
+      <div class="linha2" style="display: flex; margin-bottom: 15px;">
+        <div class="farmtext" style="width: 750px; height: 750px; border-radius: 15px;background-color: #f1f1f1; margin-right:  15px;">
+          <h1 style="margin-top: 15px; text-align: center;">Parcerias</h1>
+          <p></p>
+        </div>
+        <div class="farmimg">
+          <img src="./Images/line2.png" alt="" style="width: 750px; height: 750px; border-radius: 15px;">
+        </div>
+      </div>
+      <div class="linha3" style="display: flex; margin-bottom: 15px;">
+        <div class="farmimg">
+          <img src="./Images/line3.png" alt="" style="width: 750px; height: 750px; border-radius: 15px;">
+        </div>
+        <div class="farmtext" style="width: 750px; height: 750px; border-radius: 15px;background-color: #f1f1f1; margin-left:  15px;">
+          <h1 style="margin-top: 15px; text-align: center;">Equipa</h1>
+          <p></p>
+        </div>
       </div>
     </div>
-  </nav> 
+  </div>
+  <hr style="width: 80%; margin: 0.5% 10%;">
+  <footer>
+    <div  class="footer">
+      <span class="stakeholder">
+        <a href="" class="stakeholders" style="color: black;font-size: 16px;"><img src="./Images/StakeHolder.png" alt="" style="height: 35px; width: 40px;">©2022 LusoFarm, Inc</a></p>
+      </span>
+      <span class="socials">
+        <span>
+          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        </span>
+        <span>
+          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        </span>
+        <span>
+          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+        </span>
+      </span>
+    </div>
+  </footer>
 </body>
 </html>
