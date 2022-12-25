@@ -4,6 +4,7 @@ import database
 import random
 import time
 import urllib
+import sys
 #import logging
 #logging.getLogger("requests").setLevel(logging.CRITICAL)
 
@@ -11,9 +12,12 @@ import urllib
 def getMillis():
     return int(time.time() * 1000)
 
-
 hostname = '0.0.0.0'
 port = 8080
+if len(sys.argv) > 1:
+     if sys.argv[1] == '--production':
+        hostname = ''
+        port = int(os.environ.get('PORT', '8000'))
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
