@@ -50,11 +50,9 @@
             <a class="nav-link" href="./login.html" style="width: 75px; color: black; font-size: 30px;"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px">
-          <button class="btn" type="button" style="height: 40px;color: black;"><i class="fa fa-search" aria-hidden="true"></i>
-          </button>
-        </form>
+        <div>
+          <input class="form-control me-2" type="text" data-bind="textInput: search" placeholder="Search" style="height: 40px">
+        </div>
       </div>
     </div>
   </nav>
@@ -82,11 +80,17 @@
   <script>
     function VM() {
       this.products = ko.observableArray([]);
+      this.search = ko.observable();
       this.updateProducts = () => {
-        $.get("get/products", (result) => {
-          this.products(result);  
+        link = "get/products"
+        if (this.search()) {
+          link += "?q=" + this.search()
+        }
+        $.get(link, (result) => {
+          this.products(result);
         });
       }
+      this.search.subscribe(this.updateProducts);
       this.addToCart = (product) => {
         let cart = JSON.parse(localStorage.getItem("cart"));
         if (!cart) {
