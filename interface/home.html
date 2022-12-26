@@ -25,7 +25,7 @@
 <body>
   <!--NAVBAR-->
   <div>
-    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent gradient" style="height: 65; z-index: 2;">
+    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent" style="height: 65; z-index: 2;">
         <div class="container-fluid">
           <a class="navbar-brand" href="./home.html">
             <img src="./Images/LogoPreto1.png" alt="LogoPreto" width="104" height="55">
@@ -303,7 +303,6 @@
         </div>
         <div class="swiper-button-next" style="color: white;"></div>
         <div class="swiper-button-prev" style="color: white;"></div>
-        <div class="swiper-pagination"></div>
       </div>
     </div>
   </div>
@@ -330,10 +329,10 @@
       </span>
     </div>
   </footer>
+
   <!-- Swiper JS -->
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Initialize Swiper -->
   <script>
     var swiper = new Swiper(".mySwiper", {
       slidesPerView: 3,
@@ -341,15 +340,22 @@
       slidesPerGroup: 3,
       loop: true,
       loopFillGroupWithBlank: true,
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
+      breakpoints: {
+        1:{
+          slidesPerView: 1,
+          spaceBetween: 20
+        },
+        1000:{
+          slidesPerView: 3,
+          spaceBetween: 30
+        },
+      }
     });
+
   </script>
 </body>
 </html>

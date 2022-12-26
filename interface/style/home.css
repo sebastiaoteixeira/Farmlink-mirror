@@ -167,7 +167,7 @@ input{
   
 }
 .swiper-pagination {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 :root{
     --swiper-theme-color: #FFF;
@@ -192,4 +192,10 @@ footer {
 .socials{
     align-items:flex-end;
     padding-left: 82%;
+}
+.destaques{
+    text-align: center;
+    color: #6EC500; 
+    font-size: 75px;
+    font-family: 'Archivo Black', sans-serif
 }
