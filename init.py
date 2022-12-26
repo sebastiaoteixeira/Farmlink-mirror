@@ -22,8 +22,9 @@ if len(sys.argv) > 1:
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
+        self.getFields()
+        path = self.path.split('?')[0]
         if self.path.count("/get/"):
-            self.getFields()
             table = self.path.split("/")[2].split("?")[0]
             if database.tableExists(table):
                 if database.isPublic(table):
@@ -41,7 +42,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_error(404, "Requested table not exists")
             return
 
-        path = '/home.html' if self.path == '/' else self.path
+        path = '/home.html' if path == '/' else path
         if path.count('.') == 0:
             path += '.html'
         try:
