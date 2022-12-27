@@ -102,18 +102,18 @@
           <img id="img" src="./Images/ameixa.jpg" data-bind="attr:{src: img}" alt="">
           <div id="name"><h1 data-bind="text: name">{productName}</h1></div>
           <div id="producer"><h5>{producerName}</h5></div>
-          <div id="price"><h5 data-bind="text: price">{productPrice}</h5></div>
+          <div id="price"><h5><span data-bind="text: price">{productPrice}</span>€</h5></div>
           <div class="number">
               <span id="minus">-</span>
               <input type="text" value="0g" disabled/>
               <span id="plus">+</span>
           </div>
-          <button class="cart"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to shopping cart</button>
+          <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to shopping cart</button>
         </div>
       
       	<div id="content" data-bind:"using: selectedProduct">
 	  		<!-- ko if: $data.description -->
-			<p data-bind="text: description">{productDescription}</p>i
+			<p data-bind="text: description">{productDescription}</p>
 			<!-- /ko -->
 		</div>
       </div>
@@ -169,7 +169,6 @@
 			});
 			// Modal Data Binding
 			$(document).on("click",".open-modal", function() {
-				alert($(this).children("span")[0].innerText)
 				let productIndex = parseInt($(this).children("span")[0].innerText);
 				viewModel.selectedProduct(viewModel.products()[productIndex])
 			});
