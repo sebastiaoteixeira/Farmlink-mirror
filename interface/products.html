@@ -79,7 +79,8 @@
           <h4 data-bind="text: price">Preço</h4>
         </div>
         <div class="addcart"></div>
-          <button type="button" class="addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal">
+          <button type="button" class="open-modal addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal">
+		  	<span class="d-none" data-bind="text: $index"></span>
             Open Modal
           </button>
           <div class="addcart">
@@ -97,11 +98,11 @@
         <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div id="img"></div>
-          <div id="name"><h1>{productName}</h1></div>
+        <div id="modal-body" class="modal-body" data-bind="using: selectedProduct">
+          <img id="img" src="./Images/ameixa.jpg" data-bind="attr:{src: img}" alt="">
+          <div id="name"><h1 data-bind="text: name">{productName}</h1></div>
           <div id="producer"><h5>{producerName}</h5></div>
-          <div id="price"><h5>{productPrice}</h5></div>
+          <div id="price"><h5 data-bind="text: price">{productPrice}</h5></div>
           <div class="number">
               <span id="minus">-</span>
               <input type="text" value="0g" disabled/>
@@ -110,7 +111,11 @@
           <button class="cart"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to shopping cart</button>
         </div>
       
-      <div id="content"><p>{productDescription}</p></div>
+      	<div id="content" data-bind:"using: selectedProduct">
+	  		<!-- ko if: $data.description -->
+			<p data-bind="text: description">{productDescription}</p>i
+			<!-- /ko -->
+		</div>
       </div>
     </div>
   </div>
@@ -120,6 +125,7 @@
   <script>
     function VM() {
       this.products = ko.observableArray([]);
+	  this.selectedProduct = ko.observable();
       this.search = ko.observable();
       this.updateProducts = () => {
         link = "get/products"
@@ -144,8 +150,8 @@
     viewModel.updateProducts();
     ko.applyBindings(viewModel);
 
-    //QUANTITYBUTTON
     $(document).ready(function() {
+    		//QUANTITYBUTTON
 			$("#minus").click(function () {
 				var $input = $(this).parent().find('input');
 				var count = parseInt($input.val()) - 150;
@@ -160,6 +166,12 @@
 				$input.val(count+"g");
                 $input.change();
 				return false;
+			});
+			// Modal Data Binding
+			$(document).on("click",".open-modal", function() {
+				alert($(this).children("span")[0].innerText)
+				let productIndex = parseInt($(this).children("span")[0].innerText);
+				viewModel.selectedProduct(viewModel.products()[productIndex])
 			});
 		});
   </script>
