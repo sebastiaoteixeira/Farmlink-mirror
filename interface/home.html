@@ -45,7 +45,7 @@
             </ul>
             <ul class="navbar-nav" id="right">
               <li class="nav-item" id="cart">
-                <a class="nav-link" href="./cart.html" style="width: 50px; color: white; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                <a class="nav-link" href="./cart.html" style="width: 50px; color: black; font-size: 30px;"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
               </li>
             </ul>
             <form class="d-flex">
@@ -71,7 +71,7 @@
   <br>
   <br>
   <br>
-  <div class="destaques" style="text-align: center;color: #6EC500; font-size: 75px;font-family: 'Archivo Black', sans-serif;">Destaques</div>
+  <div class="destaques" style="text-align: center;color: #6EC500; font-size: 60px;font-family: 'Archivo Black', sans-serif;">Destaques</div>
     <div class="container">
       <div class="swiper mySwiper">
         <div class="swiper-wrapper">
@@ -228,7 +228,7 @@
           <div class="swiper-slide">
             <div class="cardscontent">
               <div class="imgcard">
-                <img src="./Images/ameixa.jpg" class="prodimg" alt="">
+                <img src="./Images/ameixa.png" class="prodimg" alt="">
               </div>
               <div class="nameprod">
                 <h1 style="font-size: 20px; color: white; margin-top: 15px;">Ameixa</h1>
@@ -311,23 +311,47 @@
   <br>
   <br>
   <hr style="width: 80%; margin: 0.5% 10%;">
-  <footer>
-    <div  class="footer">
-      <span class="stakeholder">
-        <a href="" class="stakeholders" style="color: black;font-size: 16px;"><img src="./Images/StakeHolder.png" alt="" style="height: 35px; width: 40px;">©2022 LusoFarm, Inc</a></p>
-      </span>
-      <span class="socials">
-        <span>
-          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-        </span>
-        <span>
-          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        </span>
-        <span>
-          <a href="" style="color: black;font-size: 25px;"><i class="fa fa-facebook-official" aria-hidden="true"></i></a>
-        </span>
-      </span>
+  <footer class="text-center text-white" style="background-color: white;">
+    <!-- Grid container -->
+    <div class="container pt-4">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fa fa-facebook-f"></i
+        ></a>
+  
+        <!-- Twitter -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fa fa-twitter"></i
+        ></a>
+
+        <!-- Instagram -->
+        <a
+          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          href="#!"
+          role="button"
+          data-mdb-ripple-color="dark"
+          ><i class="fa fa-instagram"></i
+        ></a>
+  
+      </section>
     </div>
+    <!-- Copyright -->
+    <div class="text-center text-dark p-3" style="background-color: white;">
+      <img src="./Images/StakeHolder.png" alt="" style="height: 35px; width: 40px;">
+      © 2022
+      <a class="text-dark" href="about.html"> LusoFarm, Inc.</a>
+    </div>
+    <!-- Copyright -->
   </footer>
 
   <!-- Swiper JS -->
@@ -335,25 +359,48 @@
 
   <script>
     var swiper = new Swiper(".mySwiper", {
-      slidesPerView: 3,
-      spaceBetween: 30,
-      slidesPerGroup: 3,
+      slidesPerView: 4,
+      spaceBetween: 25,
+      centeredSlides: true,
+      slidesPerGroup: 1,
       loop: true,
       loopFillGroupWithBlank: true,
+      
+      breakpoints: {
+        0: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        350: {
+          slidesPerView: 1.30,
+          spaceBetween: 10,
+          
+        },
+        580: {
+          slidesPerView: 1.75,
+          spaceBetween: 10,
+          
+        },
+        768: {
+          slidesPerView: 2.5,
+          spaceBetween: 10,
+          
+        },
+        1100: {
+          slidesPerView: 3.5,
+          spaceBetween: 10,
+         
+        },
+        1200: {
+          slidesPerView: 4,
+          spaceBetween: 10,
+         
+        },
+      },
       navigation: {
         nextEl: ".swiper-button-next",
         prevEl: ".swiper-button-prev",
       },
-      breakpoints: {
-        1:{
-          slidesPerView: 1,
-          spaceBetween: 20
-        },
-        1000:{
-          slidesPerView: 3,
-          spaceBetween: 30
-        },
-      }
     });
 
   </script>

@@ -1,7 +1,6 @@
 /*Navbar*/
-
 .nav-link{
-    color: black;
+    color: white;
     padding-right: 25px;
     width: 115px;
     text-align: center;
@@ -9,18 +8,18 @@
 
 .nav-item:not(#cart,#login){
     border-radius: 30px;
-    background-color: #D9D9D9;
+    background-color: #6EC500;
     margin-right: 30px;
+    color: white;
 }
-
 
 #right{
     margin-left: auto;
 }
-/**/
+
+
 
 /*Body*/
-
 body{
     background-color:white;
 }
