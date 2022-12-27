@@ -119,6 +119,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.end_headers()
         return
 
+    
+    def editProducer(self, userId):
+       pass 
+
     def login(self):
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
@@ -145,7 +149,13 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     def onlyProducer(func):
         def inner():
-            pass
+            if self.isSessionValid():
+                if self.isProducer():
+                    return func(self)
+                else:
+                    self.send_error(403, 'Only producers can access this function')
+            else:
+                self.send_error(401, 'Login is needed')
                 
 
     def isSessionValid(self):
@@ -174,19 +184,16 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             return True
         return False
 
-    @onlyLogged
+    @onlyProducer
     def addNewProduct(self):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
-        if self.isProducer(userId):
-            if not database.tableExists("products"):
-                database.createTable("products", True)
-            product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
-            self.send_response(200)
-            self.send_header('Content-type', "application/json")
-            self.end_headers()
-            self.wfile.write(bytes(database.json.dumps(product)))
-        else:
-            self.send_error(403, 'Only producers can add new products')
+        if not database.tableExists("products"):
+            database.createTable("products", True)
+        product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
+        self.end_headers()
+        self.wfile.write(bytes(database.json.dumps(product)))
 
 
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
