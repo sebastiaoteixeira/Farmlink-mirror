@@ -67,24 +67,19 @@
   <!--CONTENT-->
   <div class="container">
     <div class="products-container" data-bind="foreach: products"><!---->
-      <div class="product" style="border: 1px solid green;">
-        <div class="imgprod">
-          <img class="imagemprod" src="./Images/ameixa.jpg" data-bind="attr:{src: img}" alt="">
-        </div>
-        <hr style="color: black;">
-        <div class="nameprod">
-          <h2 data-bind="text: name">Produto</h2>
-        </div>
-        <div class="priceprod">
-          <h4 data-bind="text: price">Preço</h4>
-        </div>
-        <div class="addcart"></div>
-          <button type="button" class="open-modal addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal">
-		  	<span class="d-none" data-bind="text: $index"></span>
-            Open Modal
-          </button>
-          <div class="addcart">
-            <input type="button" class="addcarrinho" value="Add to cart" data-bind="click: $parent.addToCart">
+      <div class="product" >
+        <div class="cardcontent">
+          <div class="imgprod">
+            <img class="imagemprod" src="" data-bind="attr: {src:}" width="80%" height="90%" style="border-radius: 15px;" alt="">
+          </div>
+          <div class="nameprod" data-bind="text: name">
+            <h2>Pêra</h2>
+          </div>
+          <div class="priceprod" data-bind="text: price">
+            <h4>Preço/KG</h4>
+          </div>
+          <div>
+            <button type="button" class="open-modal addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal"><span class="d-none" data-bind="text: $index"></span>Comprar</button>
           </div>
         </div>
       </div>
