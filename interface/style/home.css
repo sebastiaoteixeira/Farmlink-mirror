@@ -162,9 +162,11 @@ input{
 }
 .swiper-button-prev {
     color: white;
+    background-color: #70c5008e;
 }
 .swiper-button-next{
     color: white;
+    background-color: #70c5008e;
 }
 .swiper-pagination-bullet-active{
     width: 35px;

@@ -1,0 +1,4 @@
+página para adicionar/remover/editar produtos
+editar informação produtor (modal)
+gerir pedidos (e página que o possiblite)
+acabar about page
