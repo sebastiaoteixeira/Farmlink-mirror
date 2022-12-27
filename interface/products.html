@@ -67,23 +67,56 @@
   <!--CONTENT-->
   <div class="container">
     <div class="products-container" data-bind="foreach: products"><!---->
-      <div class="product">
+      <div class="product" style="border: 1px solid green;">
         <div class="imgprod">
           <img class="imagemprod" src="./Images/ameixa.jpg" data-bind="attr:{src: img}" alt="">
         </div>
         <hr style="color: black;">
         <div class="nameprod">
-          <h1 data-bind="text: name">Produto</h1>
+          <h2 data-bind="text: name">Produto</h2>
         </div>
         <div class="priceprod">
-          <h2 data-bind="text: price">Preço</h2>
+          <h4 data-bind="text: price">Preço</h4>
         </div>
-        <div class="addcart">
-          <input type="button" class="addcarrinho" value="Add to cart" data-bind="click: $parent.addToCart">
+        <div class="addcart"></div>
+          <button type="button" class="addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal">
+            Open Modal
+          </button>
+          <div class="addcart">
+            <input type="button" class="addcarrinho" value="Add to cart" data-bind="click: $parent.addToCart">
+          </div>
         </div>
       </div>
     </div> 
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="img"></div>
+          <div id="name"><h1>{productName}</h1></div>
+          <div id="producer"><h5>{producerName}</h5></div>
+          <div id="price"><h5>{productPrice}</h5></div>
+          <div class="number">
+              <span id="minus">-</span>
+              <input type="text" value="0g" disabled/>
+              <span id="plus">+</span>
+          </div>
+          <button class="cart"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to shopping cart</button>
+        </div>
+      
+      <div id="content"><p>{productDescription}</p></div>
+      </div>
+    </div>
+  </div>
+
+
+
   <script>
     function VM() {
       this.products = ko.observableArray([]);
@@ -110,6 +143,25 @@
     var viewModel = new VM();
     viewModel.updateProducts();
     ko.applyBindings(viewModel);
+
+    //QUANTITYBUTTON
+    $(document).ready(function() {
+			$("#minus").click(function () {
+				var $input = $(this).parent().find('input');
+				var count = parseInt($input.val()) - 150;
+				count = count < 0 ? 0 : count;
+				$input.val(count+"g");
+				$input.change();
+				return false;
+			});
+			$("#plus").click(function () {
+				var $input = $(this).parent().find('input');
+				var count = parseInt($input.val()) + 150;
+				$input.val(count+"g");
+                $input.change();
+				return false;
+			});
+		});
   </script>
 </body>
 </html>

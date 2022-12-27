@@ -23,7 +23,7 @@
 body{
     background-color:white;
 }
-/**/
+
 
 /*Content and Products*/
 
@@ -59,4 +59,70 @@ body{
     color: white;
     border-radius:  15px; ;
 }
-/**/
+
+
+
+/* Modal */
+
+#img{
+    
+    float: left;
+    margin: 50px;
+    height: 250px;
+    width: 250px;
+    background-color: black;
+}
+#name{
+    margin: 50px 0px 10px 50px;
+}
+
+
+
+#minus, #plus {cursor:pointer; }
+.number{
+    margin: 30px 0px 10px 50px;
+    height: 40px;
+    width: 500px;
+}
+#minus, #plus{
+    box-sizing: initial;
+    width:25px;
+	height:20px;
+    background: #6EC500;
+    font-size: larger;
+    color: white;
+    padding:3px 5px 12px 5px;
+    border-radius:4px;
+    border:1px solid #ddd;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+}
+
+input{
+    padding: 0;
+    height: 35px;
+    width: 100px;
+    text-align: center;
+    font-size: 26px;
+    border:1px solid #6EC500;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.cart {
+    border-radius: 4px;
+    background-color: #6EC500;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+#content{
+    padding: 50px 50px;
+}

@@ -98,9 +98,7 @@ background-color: white;
 #right{
     margin-left: auto;
 }
-.background{
-  background-image: url(./farmLink/interface/Images/back1.png);
-}
+
 .swiper-container {
     width: 100%;
     height: 100%;
