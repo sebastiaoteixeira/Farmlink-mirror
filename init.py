@@ -180,7 +180,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if self.isProducer(userId):
             if not database.tableExists("products"):
                 database.createTable("products", True)
-            product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
+            product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
             self.send_response(200)
             self.send_header('Content-type', "application/json")
             self.end_headers()
