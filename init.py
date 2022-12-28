@@ -93,6 +93,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.editProducer()
         elif self.path == "/editProduct":
             self.editProduct()
+        elif self.path == "/removeProduct":
+            self.removeProduct()
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -131,7 +133,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def registerProducer(self):
         if not database.tableExists("producer"):
             database.createTable("producer", True)
-        producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo")})
+        producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "website": self.fields.get("website"), "description": self.fields.get("description"), "photo": self.fields.get("photo")})
         return producerData["id"]
 
     
@@ -223,7 +225,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_error(403, "You have not permission to edit this product")
                 return
 
-            productId = database.getRows("products", lambda row: row["id"] == self.fields["productId"])[0]["id"]
+            productId = self.fields["productId"]
 
             if self.fields.get("name"):
                 database.editRowElement("products", productId, "name", self.fields["name"])
@@ -245,6 +247,23 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             return
 
     @onlyProducer
+    def removeProduct(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        if not database.tableExists("products"):
+            self.send_error(404, "Products table not exists")
+        if database.rowExists("products", lambda row: row["id"] == self.fields["productId"]):
+            producerIdOfProduct = database.getRowById("products", self.fields["productId"])["producerId"]
+            if producerId != producerIdOfProduct:
+                self.send_error(403, "You have not permission to edit this product")
+                return
+
+            productId = self.fields["productId"]
+            database.removeRow("products", productId)
+            
+        
+
+    @onlyProducer
     def editProducer(self):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
         if not database.tableExists("producer"):
@@ -263,6 +282,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 database.editRowElement("producer", producerId, "description", self.fields["description"])
             elif self.fields.get("photo"):
                 database.editRowElement("producer", producerId, "photo", self.fields["photo"])
+            elif self.fields.get("website"):
+                database.editRowElement("producer", producerId, "website", self.fields["website"]
 
             self.send_response(200)
             self.end_headers()
