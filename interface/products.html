@@ -88,7 +88,7 @@
             <h2 data-bind="text: name"></h2>
           </div>
           <div class="priceprod">
-            <h4 data-bind="text: price + '€/Kg'"></h4>
+            <h4 data-bind="text: price.toFixed(2) + '€/Kg'"></h4>
           </div>
           <div>
             <button type="button" class="open-modal addcarrinho" data-bind="click: $parent.bindModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Comprar</button></a>
@@ -117,7 +117,7 @@
               <div class="producername">
                 <h2 style="font-weight: 600;">Quinta do Joaquim</h2>
               </div>
-              <p class="productprice" data-bind="text: selectedProduct().price + '€/Kg'" style="font-weight: 600;">
+              <p class="productprice" data-bind="text: selectedProduct().price.toFixed(2) + '€/Kg'" style="font-weight: 600;">
               </p>
               <div class="quantity">
                 <span id="minus">-</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
@@ -163,8 +163,18 @@
         }
         qty = $("#qty").val()
         qty = parseInt(qty.slice(0, qty.length - 1));
-        cart.push({"id": product["id"], "qty":  qty});
-        localStorage.setItem("cart", JSON.stringify(cart));
+        if (qty > 0) {
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i]["id"] == product["id"]) {
+                    cart[i]["qty"] += qty;
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    return;
+                }
+            }
+            cart.push({"id": product["id"], "qty": qty});
+            localStorage.setItem("cart", JSON.stringify(cart));
+            return;
+        }
       }
       // Modal Data Binding
 	  this.bindModal = (product) => {
