@@ -91,6 +91,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.addNewProduct()
         elif self.path == "/editProducer":
             self.editProducer()
+        elif self.path == "/editProduct":
+            self.editProduct()
         return
 
     def getFields(self, post=False):
@@ -198,13 +200,47 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     @onlyProducer
     def addNewProduct(self):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
         if not database.tableExists("products"):
             database.createTable("products", True)
-        product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": userId})
+        product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": self.fields.get("stock"), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": self.fields.get("visible"), "producerId": producerId})
         self.send_response(200)
         self.send_header('Content-type', "application/json")
         self.end_headers()
         self.wfile.write(bytes(database.json.dumps(product)))
+
+    @onlyProducer
+    def editProduct(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        if not database.tableExists("products"):
+            database.createTable("products", True)
+        if database.rowExists("products", lambda row: row["id"] == self.fields["productId"]):
+            producerIdOfProduct = database.getRowById("products", self.fields["productId"])["producerId"]
+            if producerId != producerIdOfProduct:
+                self.send_error(403, "You have not permission to edit this product")
+                return
+
+            productId = database.getRows("products", lambda row: row["id"] == self.fields["productId"])[0]["id"]
+
+            if self.fields.get("name"):
+                database.editRowElement("products", productId, "name", self.fields["name"])
+            elif self.fields.get("type"):
+                database.editRowElement("products", productId, "type", self.fields["type"])
+            elif self.fields.get("price"):
+                database.editRowElement("products", productId, "price", self.fields["price"])
+            elif self.fields.get("stock"):
+                database.editRowElement("products", productId, "stock", self.fields["stock"])
+            elif self.fields.get("description"):
+                database.editRowElement("products", productId, "description", self.fields["description"])
+            elif self.fields.get("img"):
+                database.editRowElement("products", productId, "img", self.fields["img"])
+            elif self.fields.get("visible"):
+                database.editRowElement("products", productId, "visible", self.fields["visible"])
+            
+            self.send_response(200)
+            self.end_headers()
+            return
 
     @onlyProducer
     def editProducer(self):
@@ -212,7 +248,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if not database.tableExists("producer"):
             database.createTable("producer", True)
         if database.rowExists("login", lambda row: row["userId"] == userId):
-            producerId = database.getRows("login", lambda row: row["userId"] == userId)[0]["producerId"]
+            producerId = database.getRowById("login", userId)["producerId"]
 
             if self.fields.get("fname"):
                 database.editRowElement("producer", producerId, "name", self.fields["fname"])
@@ -225,6 +261,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             elif self.fields.get("photo"):
                 database.editRowElement("producer", producerId, "photo", self.fields["photo"])
 
+            self.send_response(200)
+            self.end_headers()
+            return
         
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
