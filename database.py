@@ -32,7 +32,7 @@ def createTable(table, public=False):
     Create a new table
     """
     with open(tablePath(table), 'x') as f:
-        f.write('{"lastId": 0, "public": ' + ('true' if public else 'false') + ', "tableRows": []}')
+        f.write('{"lastId": 1, "public": ' + ('true' if public else 'false') + ', "tableRows": []}')
     
     return True
     
