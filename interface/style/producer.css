@@ -20,18 +20,20 @@
 
 
 
-#right{
-    margin-left: auto;
+
+/* BODY */
+#edit{
+    background-color: #6EC500;
+    width: 150px;
+    margin-left: 10px;
 }
 
-.imgproducer{
-    float: left;
-}
-.descricao{
-    float: right;
-    margin-left: 25px;
-}
-.content{
-    margin-top : 25px; ;
-    display: flex;
+#img{
+    background-color: black;
+    
+    margin-bottom: 50px;
+    /*float: left;
+    margin: 50px;
+    height: 300px;
+    width: 300px;*/
 }
