@@ -34,7 +34,18 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                     if not self.path.count("?"):
                         self.wfile.write(bytes(database.json.dumps(database.getAllRows(table)), 'utf-8'))
                     else:
-                        conditions = lambda row: all([self.fields[key] == row[key] for key in self.fields.keys() if key != "q" and row.get(key)]) and any([row[key].lower().count(self.fields["q"].lower()) for key in row] if row.get("q") else [True])
+                        def conditions(row):
+                            for key in self.fields.keys():
+                                if row.get(key):
+                                    if self.fields[key] != row[key]:
+                                        return False
+
+                            if self.fields.get("q"):
+                                for key in row.keys():
+                                    if row[key].lower().count(self.fields["q"].lower()):
+                                        return True
+                                return False
+                            return True
                         self.wfile.write(bytes(database.json.dumps(database.getRows(table, conditions)), 'utf-8'))
                 else:
                     self.send_error(403, "Requested table is not public")
