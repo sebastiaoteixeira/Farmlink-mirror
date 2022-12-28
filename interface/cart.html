@@ -67,14 +67,15 @@
   <div class="container">
     <h1><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</h1>
     <hr>
-    <table class="table">
+    <table id="cart-content" class="table">
       <thead>
         <tr>
           <th scope="col">Nº</th>
           <th scope="col"></th>
           <th scope="col">Name</th>
           <th scope="col">Quantity</th>
-          <th scope="col">Price</th>
+          <th scope="col">Un. Price (€/Kg)</th>
+          <th scope="col">To. Price (€)</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -85,16 +86,34 @@
           <img class="square" data-bind="attr: {src: img}"></div></td>
           <td><span data-bind="text: name"></span></td>
           <td><span data-bind="text: qty"></span>g</td>
-          <td><span data-bind="text: price"></span></td>
+          <td><span data-bind="text: price.toFixed(2)"></span>€</td>
+          <td><span data-bind="text: (qty*price/1000).toFixed(2)"></span>€</td>
           <td><button class="btn btn-danger" data-bind="click: $parent.removeProduct">X</button></td>
         </tr>
-
+        <!-- ko if: $index() == $parent.products().length - 1 -->
+        <tr>
+          <th><br>Total</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th data-bind="html: '<br>' + $parent.total() + '€'"></th>
+          <th></th>
+        </tr>
+        <!-- /ko -->
       </tbody>
     </table>
   </div>
   <script>
     function Cart() {
       this.products = ko.observableArray([]);
+      this.total = ko.computed(() => {
+        let totalc = 0;
+        for (let i = 0; i < this.products().length; i++) {
+          totalc += this.products()[i]["qty"] * this.products()[i]["price"] / 1000;
+        }
+        return totalc;
+      }, this);
       this.updateCart = () => {
         let products_index = JSON.parse(localStorage.getItem("cart"))
         this.products.removeAll();
@@ -118,7 +137,7 @@
     }
     var cart = new Cart()
     cart.updateCart()
-    ko.applyBindings(cart);
+    ko.applyBindings(cart, document.getElementById("cart-content"));
   </script>
 </body>
 </html>
