@@ -63,64 +63,65 @@ body{
 
 /* Modal */
 
-#img{
-    
-    float: left;
-    margin: 50px;
-    height: 250px;
-    width: 250px;
-}
-#name{
-    margin: 50px 0px 10px 50px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
+        .buyproduct{
+            width: 900px;
+            height: 450px;
+            
+        }
+        .modal{
+            width: 900px;
+            height: 550px;
+            max-width: 1920px;
+            font-family: 'Inter', sans-serif;
+        }
+        .modalcontent{
+            display:flex;
 
-
-
-#minus, #plus {cursor:pointer; }
-.number{
-    margin: 30px 0px 10px 50px;
-    height: 40px;
-    width: 500px;
-}
-#minus, #plus{
-    box-sizing: initial;
-    width:25px;
-	height:20px;
-    background: #6EC500;
-    font-size: larger;
-    color: white;
-    padding:3px 5px 12px 5px;
-    border-radius:4px;
-    border:1px solid #ddd;
-    display: inline-block;
-    vertical-align: middle;
-    text-align: center;
-}
-
-input{
-    padding: 0;
-    height: 35px;
-    width: 100px;
-    text-align: center;
-    font-size: 26px;
-    border:1px solid #6EC500;
-    border-radius: 4px;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.cart {
-    border-radius: 4px;
-    background-color: #6EC500;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-  }
-
-#content{
-    padding: 50px 50px;
-}
+        }
+        .right{
+            margin-left: 5%;
+        }
+        .imagemmodal{
+            width: 400px;
+            height: 400px;
+        }
+        .cart{
+            width: 250px;
+            background-color: #6EC500;
+            border-radius: 15px;
+            border: none;
+            outline: none;
+            height: 40px;
+            color: white;
+            margin-top: 25%;
+        }
+        .quantity{
+            margin-top: 20%;
+        }
+        #minus, #plus{
+            cursor: pointer;
+            box-sizing: initial;
+            width: 25px;
+            height: 20px;
+            background: #6EC500;
+            font-size: larger;
+            color: white;
+            padding: 3px 5px 12px 5px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .inputqty{
+            padding: 0;
+            height: 35px;
+            width: 100px;
+            text-align: center;
+            font-size: 26px;
+            border: 1px solid #6EC500;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+        }

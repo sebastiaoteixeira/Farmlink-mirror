@@ -12,11 +12,13 @@
     <title>FarmLink</title>
     <!--CSS-->
     <link rel="stylesheet" href="./style/products.css">
+    
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script src="scripts/jquery.cookie.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <!-- KnockoutJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
 </head>
@@ -79,7 +81,7 @@
             <h4></h4>
           </div>
           <div>
-            <button type="button" class="open-modal addcarrinho" data-bs-toggle="modal" data-bs-target="#myModal"><span class="d-none" data-bind="text: $index"></span>Comprar</button>
+            <a href="#ex1" rel="modal:open"><button type="button" class="open-modal addcarrinho"><span class="d-none" data-bind="text: $index"></span>Comprar</button></a>
           </div>
         </div>
       </div>
@@ -87,36 +89,42 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div id="ex1" class="modal">
+    <div class="buyproduct">
+      <div class="modalcontent" data-bind="using: selectedProduct">
+        <div class="left">
+            <img src="" class="imagemmodal" alt="" data-bind="attr:{src: img}">
         </div>
-        <div id="modal-body" class="modal-body" data-bind="using: selectedProduct">
-          <img id="img" src="./Images/ameixa.png" data-bind="attr:{src: img}" alt="">
-          <div id="name"><h1 data-bind="text: name">{productName}</h1></div>
-          <div id="producer"><h5>{producerName}</h5></div>
-          <div id="price"><h5><span data-bind="text: price">{productPrice}</span>€</h5></div>
-          <div class="number">
-              <span id="minus">-</span>
-              <input type="text" value="0g" disabled/>
-              <span id="plus">+</span>
+        <div class="right">
+          <div class="productname" data-bind="text: name">
+            <h1></h1>
           </div>
-          <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to shopping cart</button>
+          <div class="producername">
+            <h2></h2>
+          </div>
+          <div class="productprice" data-bind="text: price" style="font-weight: 600;">
+            
+          </div>
+          <div class="quantity">
+            <span id="minus">-</span>
+            <input type="text" value="0g" class="inputqty" disabled>
+            <span id="plus" >+</span>
+          </div>
+          <div class="addtocart">
+            <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to cart</button>
+          </div>
         </div>
-      
-      	<div id="content" data-bind:"using: selectedProduct">
-	  		<!-- ko if: $data.description -->
-			<p data-bind="text: description">{productDescription}</p>
-			<!-- /ko -->
-		</div>
+      </div>
+      <div id="content" data-bind="using: selectedProduct">
+        <!-- ko if: $data.description -->
+        <p data-bind="text: description"></p>
+        <!-- /ko -->
       </div>
     </div>
   </div>
-
-
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  <!-- jQuery Modal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script>
     function VM() {
       this.products = ko.observableArray([]);
