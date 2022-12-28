@@ -95,6 +95,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.editProduct()
         elif self.path == "/removeProduct":
             self.removeProduct()
+        elif self.path == "/createOrder":
+            self.createOrder()
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -283,11 +285,22 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             elif self.fields.get("photo"):
                 database.editRowElement("producer", producerId, "photo", self.fields["photo"])
             elif self.fields.get("website"):
-                database.editRowElement("producer", producerId, "website", self.fields["website"]
+                database.editRowElement("producer", producerId, "website", self.fields["website"])
 
             self.send_response(200)
             self.end_headers()
             return
+
+    @onlyLogged
+    def createOrder(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        product = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"]})
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
+        self.end_headers()
+        self.wfile.write(bytes(database.json.dumps(product), 'utf-8'))
+        return
+        
         
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
