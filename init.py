@@ -113,7 +113,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             else:
                 field_data = "_=null"
         field_data = urllib.parse.unquote_plus(field_data)
-        self.fields = {name : (True if value == "on" else (int(value) if value.isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else value))) for name, value in (item.split("=") for item in field_data.split("&"))}
+        self.fields = {name : (True if value == "on" or value == "true" else (int(value) if value.isdigit() else (int(value) if value[0] == "-" and value[1:].isdigit() else (float(value) if value.count(".") == 1 and value.replace(".", "").isdigit() else (float(value) if value.count(".") == 1 and value[0] == "-" and value.replace(".", "")[1:].isdigit() else value))))) for name, value in (item.split("=") for item in field_data.split("&"))}
 
     def getCookies(self):
         cookie_data = self.headers['Cookie']
