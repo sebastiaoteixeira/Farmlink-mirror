@@ -120,8 +120,6 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return
 
     
-    def editProducer(self, userId):
-       pass 
 
     def login(self):
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
@@ -148,7 +146,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         return inner
 
     def onlyProducer(func):
-        def inner():
+        def inner(self):
             if self.isSessionValid():
                 if self.isProducer():
                     return func(self)
@@ -194,8 +192,30 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.send_header('Content-type', "application/json")
         self.end_headers()
         self.wfile.write(bytes(database.json.dumps(product)))
+"""
+    @onlyProducer
+    def editProducer(self, userId):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        if not database.tableExists("producer"):
+            database.createTable("producer", True)
+        if database.rowExists("sessions", lambda row: row["userId"] == userId):
+            producerData = database.getRow("sessions", lambda row: row["userId"] == userId)
+            database.removeRow("producer", producerData["id"])
 
+            if self.fields.get("fname"):
+                producerData["name"] = self.fields["fname"]
+            elif self.fields.get("email"):
+                producerData["email"] = self.fields["email"]
+            elif self.fields.get("contact-phone"):
+                producerData["phone"] = self.fields["contact-phone"]
+            elif self.fields.get("description"):
+                producerData["description"] = self.fields["description"]
+            elif self.fields.get("photo"):
+                producerData["photo"] = self.fields["photo"]
 
+            database.addRow("")
+        """
+        
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
 
 print("\n\tStarting server at:  ", hostname, ":", port, "\n", sep="")
