@@ -81,14 +81,16 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         elif self.path == "/register":
             self.register()
         elif self.path == "/registerProducer":
-            userId = self.register()
-            self.registerProducer(userId)
+            producerId = self.registerProducer()
+            self.register(producerId)
         elif self.path == "/verifySession":
             self.verifySession()
         elif self.path == "/personalData":
             self.getPersonalData()
         elif self.path == "/addNewProduct":
             self.addNewProduct()
+        elif self.path == "/editProducer":
+            self.editProducer()
         return
 
     def getFields(self, post=False):
@@ -110,9 +112,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         else:
             self.cookies = {}
 
-    def register(self):
+    def register(self, producerId = None):
         if not database.tableExists("login") or not database.rowExists("login", lambda row: row["email"] == self.fields["email"]): 
-            loginData = database.addRow("login", {"name": self.fields["fname"], "email": self.fields["email"], "password": sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest(), "producer": self.fields.get("producer")})
+            loginData = database.addRow("login", {"name": self.fields["fname"], "email": self.fields["email"], "password": sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest(), "producer": self.fields.get("producer"), "producerId": producerId})
             self.send_response(302)
             self.createSession(loginData["id"])
             self.send_header('Location', '/home')
@@ -121,10 +123,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.send_error(400, "This Email is already registed")
         return loginData["id"]
 
-    def registerProducer(self, userId):
+    def registerProducer(self):
         if not database.tableExists("producer"):
             database.createTable("producer", True)
-        producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo"), "userId": userId})
+        producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo")})
         self.send_response(200)
         self.send_header('Location', "/producer")
         self.end_headers()
@@ -205,29 +207,27 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.send_header('Content-type', "application/json")
         self.end_headers()
         self.wfile.write(bytes(database.json.dumps(product)))
-"""
+
     @onlyProducer
-    def editProducer(self, userId):
+    def editProducer(self):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
         if not database.tableExists("producer"):
             database.createTable("producer", True)
-        if database.rowExists("sessions", lambda row: row["userId"] == userId):
-            producerData = database.getRow("sessions", lambda row: row["userId"] == userId)
-            database.removeRow("producer", producerData["id"])
+        if database.rowExists("login", lambda row: row["userId"] == userId):
+            producerId = database.getRows("login", lambda row: row["userId"] == userId)[0]["producerId"]
 
             if self.fields.get("fname"):
-                producerData["name"] = self.fields["fname"]
+                database.editRowElement("producer", producerId, "name", self.fields["fname"])
             elif self.fields.get("email"):
-                producerData["email"] = self.fields["email"]
+                database.editRowElement("producer", producerId, "email", self.fields["email"])
             elif self.fields.get("contact-phone"):
-                producerData["phone"] = self.fields["contact-phone"]
+                database.editRowElement("producer", producerId, "phone", self.fields["contact-phone"])
             elif self.fields.get("description"):
-                producerData["description"] = self.fields["description"]
+                database.editRowElement("producer", producerId, "description", self.fields["description"])
             elif self.fields.get("photo"):
-                producerData["photo"] = self.fields["photo"]
+                database.editRowElement("producer", producerId, "photo", self.fields["photo"])
 
-            database.addRow("")
-        """
+        
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
 
