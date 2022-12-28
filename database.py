@@ -151,10 +151,11 @@ def editRowElement(tableName, rowId, param, newValue):
         table = readTable(tableName)
          
         changedRow = {}
-        for row in table["tableRows"]:
-            if row["id"] == rowId:
-                row[param] = newValue
-                changedRow = row
+        for i in range(len(table["tableRows"])):
+            if table["tableRows"][i]["id"] == rowId:
+                table["tableRows"][i][param] = newValue
+                changedRow = table["tableRows"][i]
+
 
         writeTable(tableName, table)
         return changedRow

@@ -93,6 +93,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.editProducer()
         elif self.path == "/editProduct":
             self.editProduct()
+        else:
+            self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
 
     def getFields(self, post=False):
@@ -130,7 +132,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if not database.tableExists("producer"):
             database.createTable("producer", True)
         producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo")})
-        return
+        return producerData["id"]
 
     
 
@@ -207,7 +209,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', "application/json")
         self.end_headers()
-        self.wfile.write(bytes(database.json.dumps(product)))
+        self.wfile.write(bytes(database.json.dumps(product), 'utf-8'))
 
     @onlyProducer
     def editProduct(self):
@@ -249,6 +251,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             database.createTable("producer", True)
         if database.rowExists("login", lambda row: row["id"] == userId):
             producerId = database.getRowById("login", userId)["producerId"]
+            print("Producer Id:", producerId)
 
             if self.fields.get("fname"):
                 database.editRowElement("producer", producerId, "name", self.fields["fname"])
