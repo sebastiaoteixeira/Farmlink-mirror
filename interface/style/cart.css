@@ -24,7 +24,8 @@ body{
 }
 
 .square{
-    border-radius: 5px; 
+    border-radius: 5px;
+    fit-content: cover
     height: 80px;
     width: 80px;
 }
