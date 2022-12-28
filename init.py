@@ -96,7 +96,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         elif self.path == "/removeProduct":
             self.removeProduct()
         elif self.path == "/createOrder":
-            self.createOrder()
+            order = self.createOrder()
+            self.fields["orderId"] = order["id"] # External payment system is not integrated 
+            self.payOrder()                      # so order is marked as payed
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -291,16 +293,58 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.end_headers()
             return
 
+    """
+    Order Status:
+        -3: invalidated
+        -2: canceled
+        -1: rejected
+        
+        0: delivered
+
+        2: validated
+        3: pendent
+        4: accepted
+        5: prepared
+        6: picked up
+        7: returned
+    """
+
     @onlyLogged
     def createOrder(self):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
-        product = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"]})
-        self.send_response(200)
-        self.send_header('Content-type', "application/json")
-        self.end_headers()
-        self.wfile.write(bytes(database.json.dumps(product), 'utf-8'))
+        if not database.tableExists("products"):
+            self.send_error(404, "Products table not exists")
+        if database.rowExists("products", lambda row: row["id"] == self.fields["productId"]):
+            productData = database.getRowById("products", self.fields["productId"])
+            if productData["stock"] != 0:
+                if productData["stock"] > 0:
+                    database.editRowElement("products", productData["id"], "stock", productData["stock"] - 1)
+                order = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"], "status": 2})
+                self.send_response(200)
+                self.send_header('Content-type', "application/json")
+                self.end_headers()
+                self.wfile.write(bytes(database.json.dumps(order), 'utf-8'))
+            else:
+                order = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"], "status": -3})
+                self.send_error(400, "Request product isn't available")
+            return order
+        else:
+            self.send_error(400, "Requested product doesn't exists")
         return
-        
+
+    @onlyLogged
+    def payOrder(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        if not database.tableExists("orders"):
+            self.send_error(404, "Orders table not exists")
+        if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
+            order = database.getRowById("orders", self.fields["orderId"])
+            if order["status"] == 2:
+                database.editRowElement("orders", order["id"], "status", 3)
+            else:
+                self.send_error(400, "Requested order's status is not validated")
+        else:
+            self.send_error(400, "Requested order doesn't exists")
         
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
