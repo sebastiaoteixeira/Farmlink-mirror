@@ -117,7 +117,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             loginData = database.addRow("login", {"name": self.fields["fname"], "email": self.fields["email"], "password": sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest(), "producer": self.fields.get("producer"), "producerId": producerId})
             self.send_response(302)
             self.createSession(loginData["id"])
-            self.send_header('Location', '/home')
+            location = '/producer' if self.fields.get("producer") else '/home'
+            self.send_header('Location', location)
             self.end_headers()
         else:
             self.send_error(400, "This Email is already registed")
@@ -127,9 +128,6 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if not database.tableExists("producer"):
             database.createTable("producer", True)
         producerData = database.addRow("producer", {"name": self.fields.get("fname"), "email": self.fields.get("email"), "phone": self.fields.get("contact-phone"), "description": self.fields.get("description"), "photo": self.fields.get("photo")})
-        self.send_response(200)
-        self.send_header('Location', "/producer")
-        self.end_headers()
         return
 
     
