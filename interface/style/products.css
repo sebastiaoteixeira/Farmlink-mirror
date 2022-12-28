@@ -69,13 +69,13 @@ body{
             height: 450px;
             
         }
-        .modal{
+        .modal-dialog{
             width: 900px;
             height: 550px;
             max-width: 1920px;
             font-family: 'Inter', sans-serif;
         }
-        .modalcontent{
+        .content{
             display:flex;
 
         }
@@ -125,3 +125,6 @@ body{
             display: inline-block;
             vertical-align: middle;
         }
+        .modal-header{
+            border: none;
+          }
