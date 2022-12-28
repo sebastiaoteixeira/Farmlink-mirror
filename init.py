@@ -99,6 +99,12 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.createOrder()
         elif self.path == "/payOrder": 
             self.payOrder()
+        elif self.path == "/acceptOrder":
+            self.acceptOrder()
+        elif self.path == "/rejectOrder":
+            self.rejectOrder()
+        elif self.path == "/orderPrepared":
+            self.markOrderAsPrepared()
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -349,9 +355,75 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 self.send_error(400, "Requested order's status is not validated")
         else:
             self.send_error(400, "Requested order doesn't exists")
+        return
     
-    #@isProducer
-    #def 
+    @onlyProducer
+    def acceptOrder(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        if not database.tableExists("orders"):
+            self.send_error(404, "Orders table not exists")
+        if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
+            order = database.getRowById("orders", self.fields["orderId"])
+            product = database.getRowById("products", order["productId"])
+            if product["producerId"] != producerId:
+                self.send_error(403, "You have not access to this order")
+                return
+            if order["status"] == 3:
+                database.editRowElement("orders", order["id"], "status", 4)
+                self.send_response_only(201)
+                self.end_headers()
+            else:
+                self.send_error(400, "Requested order's status is not validated")
+        else:
+            self.send_error(400, "Requested order doesn't exists")
+        return
+
+    @onlyProducer
+    def rejectOrder(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        if not database.tableExists("orders"):
+            self.send_error(404, "Orders table not exists")
+        if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
+            order = database.getRowById("orders", self.fields["orderId"])
+            product = database.getRowById("products", order["productId"])
+            if product["producerId"] != producerId:
+                self.send_error(403, "You have not access to this order")
+                return
+            if order["status"] == 3:
+                database.editRowElement("orders", order["id"], "status", -1)
+                self.send_response_only(201)
+                self.end_headers()
+            else:
+                self.send_error(400, "Requested order's status is not validated")
+        else:
+            self.send_error(400, "Requested order doesn't exists")
+        return
+
+    @onlyProducer
+    def markOrderAsPrepared(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        if not database.tableExists("orders"):
+            self.send_error(404, "Orders table not exists")
+        if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
+            order = database.getRowById("orders", self.fields["orderId"])
+            product = database.getRowById("products", order["productId"])
+            if product["producerId"] != producerId:
+                self.send_error(403, "You have not access to this order")
+                return
+            if order["status"] == 4:
+                database.editRowElement("orders", order["id"], "status", 5)
+                self.send_response_only(201)
+                self.end_headers()
+            else:
+                self.send_error(400, "Requested order's status is not validated")
+        else:
+            self.send_error(400, "Requested order doesn't exists")
+        return
+
+        
 
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
