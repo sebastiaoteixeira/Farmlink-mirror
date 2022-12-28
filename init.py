@@ -148,7 +148,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def onlyProducer(func):
         def inner(self):
             if self.isSessionValid():
-                if self.isProducer():
+                userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+                if self.isProducer(userId):
                     return func(self)
                 else:
                     self.send_error(403, 'Only producers can access this function')
