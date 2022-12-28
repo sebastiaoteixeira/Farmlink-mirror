@@ -10,6 +10,8 @@
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script src="scripts/jquery.cookie.js"></script>
+    <!-- KnockoutJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
     <!--FavIcon-->
     <link rel="icon" type="image/x-icon" href="./Images/FavIcon.png"z>
     <title>FarmLink</title>
@@ -54,6 +56,7 @@
               </button>
             </form>
             <ul class="navbar-nav">
+              <!-- ko ifnot: logged -->
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="./login.html">Login</a>
               </li>
@@ -63,6 +66,12 @@
               <li class="nav-item" style="background-color: black; min-width: 147px;">
                 <a class="nav-link" style="width: fit-content;" aria-current="page" href="./signupproducer.html">Become a Partner</a>
               </li>
+              <!-- /ko -->
+              <!-- ko if: logged -->
+              <li class="nav-item" style="background-color: black;" data-bind="click: logout">
+                <a class="nav-link" aria-current="page">Logout</a>
+              </li>
+              <!-- /ko -->
             </ul>
           </div>
         </div>
@@ -362,6 +371,8 @@
   <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
   <script>
+    ko.applyBindings(login);
+
     var swiper = new Swiper(".mySwiper", {
       slidesPerView: 4,
       spaceBetween: 25,

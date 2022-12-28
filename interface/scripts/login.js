@@ -1,34 +1,37 @@
-function loginVM() {
-    this.logged = false
-    this.loginData = {}
-    this.validate = () => {
-        this.logged = false
+function Login() {
+    self = this
+    self.logged = ko.observable();
+    self.loginData = ko.observable({});
+    self.validate = () => {
+        self.logged(false);
         if ($.cookie("sessionId")) {
             $.post(
                 "/verifySession", 
-                {"null": null},
+                {},
                 (result) => {
-                    this.logged = result["isValid"];
-                    this.updateLoginData()
+                    self.logged(result["isValid"]);
+                    self.updateLoginData()
                 }
             ); 
         }
     }
-    this.updateLoginData = () => {
-        if (this.logged) {
+    self.updateLoginData = () => {
+        if (self.logged()) {
             $.post(
                 "/personalData",
-                {
-                    sessionId: $.cookie("sessionId")
-                },
+                {},
                 (result) => {
-                    this.loginData = result
+                    self.loginData(result);
                 }
                 
             )
         }
     }
+    self.logout = () => {
+        $.removeCookie("sessionId");
+        self.validate()
+    }
 }
 
-var login = new loginVM()
+var login = new Login()
 login.validate()
