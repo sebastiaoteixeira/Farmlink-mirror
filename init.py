@@ -96,9 +96,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         elif self.path == "/removeProduct":
             self.removeProduct()
         elif self.path == "/createOrder":
-            order = self.createOrder()
-            self.fields["orderId"] = order["id"] # External payment system is not integrated 
-            self.payOrder()                      # so order is marked as payed
+            self.createOrder()
+        elif self.path == "/payOrder": 
+            self.payOrder()
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -246,7 +246,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             elif self.fields.get("visible"):
                 database.editRowElement("products", productId, "visible", self.fields["visible"])
             
-            self.send_response(200)
+            self.send_response_only(201)
             self.end_headers()
             return
 
@@ -263,8 +263,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 return
 
             productId = self.fields["productId"]
-            database.removeRow("products", productId)
-            
+            database.editRowElement("products", productId, "visible", False)
+            self.send_response_only(201)
+            self.end_headers()
+            return
         
 
     @onlyProducer
@@ -289,7 +291,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             elif self.fields.get("website"):
                 database.editRowElement("producer", producerId, "website", self.fields["website"])
 
-            self.send_response(200)
+            self.send_response(201)
             self.end_headers()
             return
 
@@ -341,11 +343,16 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             order = database.getRowById("orders", self.fields["orderId"])
             if order["status"] == 2:
                 database.editRowElement("orders", order["id"], "status", 3)
+                self.send_response_only(201)
+                self.end_headers()
             else:
                 self.send_error(400, "Requested order's status is not validated")
         else:
             self.send_error(400, "Requested order doesn't exists")
-        
+    
+    #@isProducer
+    #def 
+
         
 mainServer = server.ThreadingHTTPServer((hostname, port), MainRequestHandler)
 
