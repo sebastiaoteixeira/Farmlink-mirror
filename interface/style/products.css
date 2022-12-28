@@ -24,6 +24,9 @@ body{
     background-color:white;
 }
 
+img {
+    object-fit: cover; /* In order not to distort the image */
+}
 
 /*Content and Products*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');

@@ -23,9 +23,8 @@ body{
     background-color:white;
 }
 
-#square{
-    
-    height: 50px;
-    width: 50px;
-    background-color: black;
+.square{
+    border-radius: 5px; 
+    height: 80px;
+    width: 80px;
 }

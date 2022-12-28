@@ -82,10 +82,10 @@
         <tr style="vertical-align: middle;">
           <th scope="row" data-bind="text: ($index() + 1)">1</th>
           <td>
-          <div id="square"></div></td>
-          <td data-bind="text: name"></td>
-          <td data-bind="text: qty"></td>
-          <td data-bind="text: price"></td>
+          <img class="square" data-bind="attr: {src: img}"></div></td>
+          <td><span data-bind="text: name"></span></td>
+          <td><span data-bind="text: qty"></span>g</td>
+          <td><span data-bind="text: price"></span></td>
           <td><button class="btn btn-danger" data-bind="click: $parent.removeProduct">X</button></td>
         </tr>
 

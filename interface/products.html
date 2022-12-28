@@ -121,7 +121,7 @@
               </p>
               <div class="quantity">
                 <span id="minus">-</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
-                <input type="text" value="0g" class="inputqty" disabled style="font-weight: 550;">
+                <input id="qty" type="text" value="0g" class="inputqty" disabled style="font-weight: 550;">
                 <span id="plus" >+</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
               </div>
               <div class="addtocart">
@@ -161,7 +161,9 @@
         if (!cart) {
           cart = [];
         }
-        cart.push({"id": product["id"], "qty": 1});
+        qty = $("#qty").val()
+        qty = parseInt(qty.slice(0, qty.length - 1));
+        cart.push({"id": product["id"], "qty":  qty});
         localStorage.setItem("cart", JSON.stringify(cart));
       }
       // Modal Data Binding
