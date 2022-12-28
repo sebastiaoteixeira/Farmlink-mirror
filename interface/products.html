@@ -10,6 +10,9 @@
     <!--FavIcon-->
     <link rel="icon" type="image/x-icon" href="./Images/FavIcon.png">
     <title>FarmLink</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="scripts/jquery.cookie.js"></script>
     <!--CSS-->
     <link rel="stylesheet" href="./style/products.css">
     
@@ -20,6 +23,8 @@
     <script src="scripts/jquery.cookie.js"></script>
     <!-- KnockoutJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <!-- JS -->
+    <script src="scripts/login.js"></script>
 </head>
 <body>
   <!--NAVBAR-->
@@ -52,12 +57,19 @@
               <input id="searchbox" class="form-control me-2" type="text" data-bind="textInput: search" placeholder="Search" style="height: 40px; border: black solid 2px; border-radius: 30px; ">
             </div>
             <ul class="navbar-nav">
+              <!-- ko ifnot: logged -->
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="./login.html">Login</a>
               </li>
               <li class="nav-item" style="background-color: black;">
                 <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
               </li>
+              <!-- /ko -->
+              <!-- ko if: logged -->
+              <li class="nav-item" style="background-color: black;" data-bind="click: logout">
+                <a class="nav-link" aria-current="page">Logout</a>
+              </li>
+              <!-- /ko -->
             </ul>
           </div>
         </div>
@@ -113,7 +125,7 @@
                 <span id="plus" >+</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
               </div>
               <div class="addtocart">
-                <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())" style="font-weight: 600;"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px; font-weight: 600;"></i> Add to cart</button>
+                <button class="cart" id="addToCartBtn" onclick="viewModel.addToCart(viewModel.selectedProduct())" style="font-weight: 600;" data-bs-toggle="popover" data-bs-trigger="manual" data-bs-content="Produto Adicionado ao Carrinho"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px; font-weight: 600;"></i> Add to cart</button>
               </div>
             </div>
           </div>
@@ -130,6 +142,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
   <script>
     function VM() {
+      Login.call(this);
       this.products = ko.observableArray([]);
 	  this.selectedProduct = ko.observable({"name": "Kiwi", "img": "./Images/kiwi.jpg", "price": 1.99});
       this.search = ko.observable();
@@ -160,6 +173,11 @@
     viewModel.updateProducts();
     ko.applyBindings(viewModel);
 	
+    var popover = new bootstrap.Popover("#addToCartBtn", {
+        popperConfig: function (defaultBsPopperConfig) {
+            return defaultBsPopperConfig;
+        }
+    })
 
     $(document).ready(function() {
     		//QUANTITYBUTTON
@@ -178,6 +196,13 @@
                 $input.change();
 				return false;
 			});
+
+            $("#addToCartBtn").click(function() {
+                popover.show();
+            });
+            $("#addToCartBtn").mouseleave(function() {
+                popover.hide();
+            });
 		});
   </script>
 </body>

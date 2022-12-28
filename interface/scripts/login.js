@@ -29,7 +29,7 @@ function Login() {
     }
     self.logout = () => {
         $.removeCookie("sessionId");
-        self.validate()
+        self.validate();
     }
 }
 
