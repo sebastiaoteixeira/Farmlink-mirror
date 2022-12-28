@@ -154,6 +154,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                     self.send_error(403, 'Only producers can access this function')
             else:
                 self.send_error(401, 'Login is needed')
+        return inner
                 
 
     def isSessionValid(self):
