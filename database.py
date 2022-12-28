@@ -143,3 +143,18 @@ def removeRow(tableName, rowId):
     
     return deletedRow
 
+def editRowElement(tableName, rowId, param, newValue):
+    """
+    Edit row element
+    """
+    if tableExists(tableName):
+        table = readTable(tableName)
+         
+        changedRow = {}
+        for row in table["tableRows"]:
+            if row["id"] == rowId:
+                row[param] = newValue
+                changedRow = row
+
+        writeTable(tableName, table)
+        return changedRow
