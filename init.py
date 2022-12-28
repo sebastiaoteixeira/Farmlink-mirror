@@ -112,7 +112,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def getFields(self, post=False):
         if post:
             length = int(self.headers['content-length'])
-            field_data = self.rfile.read(length).decode("UTF-8")
+            if length > 0:
+                field_data = self.rfile.read(length).decode("UTF-8")
+            else:
+                field_data = "_=null"
         else:
             if self.path.count("?"):
                 field_data = self.path.split("?")[1]
