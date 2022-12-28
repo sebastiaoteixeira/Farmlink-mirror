@@ -16,9 +16,7 @@
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <!-- Jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <script src="scripts/jquery.cookie.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <!-- KnockoutJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
 </head>
@@ -67,20 +65,20 @@
 
   <!--CONTENT-->
   <div class="container">
-    <div class="products-container" data-bind="foreach: products"><!---->
+    <div class="products-container" ><!--data-bind="foreach: products"-->
       <div class="product" >
         <div class="cardcontent">
           <div class="imgprod">
-            <img class="imagemprod" src="" data-bind="attr: {src: img}" width="80%" height="90%" style="border-radius: 15px;" alt="">
+            <img class="imagemprod" src="./Images/kiwi.jpg" data-bind="attr: {src: img}" width="80%" height="90%" style="border-radius: 15px;" alt="">
           </div>
           <div class="nameprod" data-bind="text: name">
-            <h2></h2>
+            <h2>Kiwi</h2>
           </div>
           <div class="priceprod" data-bind="text: price">
-            <h4></h4>
+            <h4>1,99€/KG</h4>
           </div>
           <div>
-            <a href="#ex1" rel="modal:open"><button type="button" class="open-modal addcarrinho"><span class="d-none" data-bind="text: $index"></span>Comprar</button></a>
+            <button type="button" class="open-modal addcarrinho" data-bs-toggle="modal" data-bs-target="#exampleModal"><span class="d-none" data-bind="text: $index"></span>Comprar</button></a>
           </div>
         </div>
       </div>
@@ -88,42 +86,50 @@
   </div>
 
   <!-- Modal -->
-  <div id="ex1" class="modal">
-    <div class="buyproduct">
-      <div class="modalcontent" data-bind="using: selectedProduct">
-        <div class="left">
-            <img src="" class="imagemmodal" alt="" data-bind="attr:{src: img}">
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="right">
-          <div class="productname" data-bind="text: name">
-            <h1></h1>
+        <div class="modal-body">
+          <div class="content">
+            <div class="left">
+              <img src="./Images/kiwi.jpg" class="imagemmodal" alt="" data-bind="attr:{src: img}">
+            </div>
+            <div class="right">
+              <div class="productname" data-bind="text: name">
+                <h1 style="font-weight: 700;">Kiwi</h1>
+              </div>
+              <div class="producername">
+                <h2 style="font-weight: 600;">Quinta do Joaquim</h2>
+              </div>
+              <div class="productprice" data-bind="text: price" style="font-weight: 600;">
+                1.99€/KG
+              </div>
+              <div class="quantity">
+                <span id="minus">-</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
+                <input type="text" value="0g" class="inputqty" disabled style="font-weight: 550;">
+                <span id="plus" >+</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
+              </div>
+              <div class="addtocart">
+                <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())" style="font-weight: 600;"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px; font-weight: 600;"></i> Add to cart</button>
+              </div>
+            </div>
           </div>
-          <div class="producername">
-            <h2></h2>
-          </div>
-          <div class="productprice" data-bind="text: price" style="font-weight: 600;">
-            
-          </div>
-          <div class="quantity">
-            <span id="minus">-</span>
-            <input type="text" value="0g" class="inputqty" disabled>
-            <span id="plus" >+</span>
-          </div>
-          <div class="addtocart">
-            <button class="cart" onclick="viewModel.addToCart(viewModel.selectedProduct())"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px;"></i> Add to cart</button>
+          <div id="content" data-bind="using: selectedProduct">
+            <!-- ko if: $data.description -->
+            <p data-bind="text: description"></p>
+            <!-- /ko -->
           </div>
         </div>
-      </div>
-      <div id="content" data-bind="using: selectedProduct">
-        <!-- ko if: $data.description -->
-        <p data-bind="text: description"></p>
-        <!-- /ko -->
       </div>
     </div>
   </div>
+     
+    </div>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <!-- jQuery Modal -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
   <script>
     function VM() {
       this.products = ko.observableArray([]);
