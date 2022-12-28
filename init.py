@@ -247,7 +247,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
         if not database.tableExists("producer"):
             database.createTable("producer", True)
-        if database.rowExists("login", lambda row: row["userId"] == userId):
+        if database.rowExists("login", lambda row: row["id"] == userId):
             producerId = database.getRowById("login", userId)["producerId"]
 
             if self.fields.get("fname"):
