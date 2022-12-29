@@ -85,10 +85,10 @@
             <img class="imagemprod" src="./Images/kiwi.jpg" data-bind="attr: {src: img}" width="80%" height="90%" style="border-radius: 15px;" alt="">
           </div>
           <div class="nameprod">
-            <h2 data-bind="text: name"></h2>
+            <h2 style="font-size: 18pt" data-bind="text: name"></h2>
           </div>
           <div class="priceprod">
-            <h4 data-bind="text: price.toFixed(2) + '€/Kg'"></h4>
+            <h4 style="font-size: 16pt" data-bind="text: price.toFixed(2) + '€/Kg'"></h4>
           </div>
           <div>
             <button type="button" class="open-modal addcarrinho" data-bind="click: $parent.bindModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Comprar</button></a>
@@ -115,7 +115,7 @@
                 <h1 style="font-weight: 700;" data-bind="text: selectedProduct().name"></h1>
               </div>
               <div class="producername">
-                <h2 style="font-weight: 600;">Quinta do Joaquim</h2>
+                <h3 style="font-weight: 500;" data-bind="text: getProducer(selectedProduct().producerId).name">Quinta do Joaquim</h3>
               </div>
               <p class="productprice" data-bind="text: selectedProduct().price.toFixed(2) + '€/Kg'" style="font-weight: 600;">
               </p>
@@ -144,8 +144,16 @@
     function VM() {
       Login.call(this);
       this.products = ko.observableArray([]);
+      this.producers = ko.observableArray([]);
 	  this.selectedProduct = ko.observable({"name": "Kiwi", "img": "./Images/kiwi.jpg", "price": 1.99});
       this.search = ko.observable();
+      this.getProducer = function (producerId) {
+        for (let i = 0; i < this.producers().length; i++) {
+          if (this.producers()[i]["id"] == producerId) {
+            return this.producers()[i];
+          }
+        }
+      }
       this.updateProducts = () => {
         link = "get/products"
         if (this.search()) {
@@ -153,6 +161,12 @@
         }
         $.get(link, (result) => {
           this.products(result);
+        });
+      }
+      this.updateProducers = () => {
+        link = "get/producer"
+        $.get(link, (result) => {
+          this.producers(result);
         });
       }
       this.search.subscribe(this.updateProducts);
@@ -183,6 +197,7 @@
     }
     var viewModel = new VM();
     viewModel.updateProducts();
+    viewModel.updateProducers();
     ko.applyBindings(viewModel);
 	
     var popover = new bootstrap.Popover("#addToCartBtn", {

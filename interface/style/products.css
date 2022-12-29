@@ -24,17 +24,15 @@ body{
     background-color:white;
 }
 
-img {
-    object-fit: cover; /* In order not to distort the image */
-}
-
 /*Content and Products*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
       .product{
         border: 2px #6EC500 solid ; 
-        border-radius: 15px; 
-        width: 13%; 
-        height: 40%;
+        border-radius: 20px; 
+        width: 280px; 
+        height: calc(20px + 220px + 20px + 36pt + 10px + 16pt + 5px + 30px + 20px + 1px);
+        margin: 40px;
+        padding: 20px 30px;
         font-family: 'Inter', sans-serif; ;
       }
       .open-modal{
@@ -45,15 +43,30 @@ img {
         background-color:#6EC500;
         color: white;
         height: 30px;
-        margin-bottom: 7%;
       }
+
       .cardcontent{
-        display: flex; 
-        flex-direction: column; 
         justify-content: center; 
         align-items: center; 
         text-align: center;
       }
+
+.imagemprod {
+    object-fit: cover;
+    width: 220px;
+    height: 220px;
+    margin-bottom: 20px;
+}
+
+.nameprod {
+    height: 36pt;
+    margin-bottom: 10px; 
+}
+
+.priceprod {
+    height: 16pt;
+    margin-bottom: 5px;
+}
 
 .products-container {
     width: 100%;
@@ -61,7 +74,6 @@ img {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    
 }
 
 /* Modal */
