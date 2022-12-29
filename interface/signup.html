@@ -9,6 +9,8 @@
     <title>FarmLink</title>
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <!--CSS-->
     <link rel="stylesheet" href="./style/signup.css">
 </head>
@@ -22,23 +24,28 @@
             
             </div>
             <div class="loginpage">
-                <form action="/register" method="post">
+                <form id="signup-form" action="/register" method="post">
                     <h1>Create Your Account</h1>
                     <div class="fname">
                         <input type="text" name="fname" id="fname" placeholder="Full name">
+                        <p id="fname-alert" style="color:red;text-align:left;" class="d-none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Required field!</p>
                     </div>
                     <div class="email">
                         <input type="email" name="email" id="email" placeholder="Email">
+                        <p id="email-alert" style="color:red;text-align:left;" class="d-none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Required field!</p>
                     </div>
                     <div class="password">
-                        <input type="password" name="password" id="password" placeholder="Password">
+                        <input type="password" name="password" class="password-input" id="password" placeholder="Password">
+                        <p id="password-alert" style="color:red;text-align:left;" class="d-none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Password has to have at least 8 characters!</p>
                     </div>
                     <div class="password">
-                        <input type="password" name="password" id="password" placeholder="Confirm password">
+                        <input type="password" name="confirm" class="password-input" id="confirm" placeholder="Confirm password">
+                        <p id="confirm-alert" style="color:red;text-align:left;" class="d-none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Password has to have at least 8 characters!</p>
                     </div>
                     <br>
                     <div class="check">
-                        <input type="checkbox" class="checkbox" >I  agree to our Terms of Service and Privacy Polity
+                        <input type="checkbox" id="terms" class="checkbox">I  agree to our Terms of Service and Privacy Polity
+                        <p id="checkbox-alert" style="color:red" class="d-none"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Required field!</p>
                     </div>
                     <div class="submit">
                         <input type="submit" id="buttonsub" value="Sign up">
@@ -51,5 +58,41 @@
             </div>
         </div>
     </div>
+    <script>
+
+            $("#signup-form").submit(() => {
+                if ($("#fname").val() == "") {
+                    $("#fname-alert").removeClass("d-none")
+                    return false;
+                } else {
+                    $("#fname-alert").addClass("d-none")
+                }
+                if ($("#email").val() == "") {
+                    $("#email-alert").removeClass("d-none")
+                    return false;
+                } else {
+                    $("#email-alert").addClass("d-none")
+                }
+                if ($("#password").val().length < 8) {
+                    $("#password-alert").removeClass("d-none")
+                    return false;
+                } else {
+                    $("#password-alert").addClass("d-none")
+                }
+                if ($("#password").val() != $("#confirm").val()) {
+                    $("#confirm-alert").removeClass("d-none")
+                    return false;
+                } else {
+                    $("#confirm-alert").addClass("d-none")
+                }
+                if (!$("#terms").prop("checked")) {
+                    $("#checkbox-alert").removeClass("d-none")
+                    return false;
+                } else {
+                    $("#checkbox-alert").addClass("d-none")
+                }
+                return true;
+            });
+    </script>
 </body>
 </html>

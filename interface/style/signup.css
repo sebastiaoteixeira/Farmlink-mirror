@@ -48,6 +48,9 @@
         width: 65vw;
         height: 100vh;
     }
+    .d-none{
+        display: none;
+    }
     a{
         text-decoration: none;
     }
@@ -78,7 +81,7 @@
         background-color: #f1f1f1;
 
     }
-    #password{
+    .password-input{
         border: none;
         outline: none;
         border-radius: 15px;
