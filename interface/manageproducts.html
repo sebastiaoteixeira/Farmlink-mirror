@@ -11,7 +11,7 @@
         <link rel="icon" type="image/x-icon" href="./Images/FavIcon.png">
         <title>FarmLink</title>
         <!--CSS-->
-        <link rel="stylesheet" href="./style/producer.css">
+        <link rel="stylesheet" href="./style/manageproducts.css">
         <!--FONTS-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     </head>
@@ -48,62 +48,48 @@
 
   <!-- CONTENT -->
     <div class="container">
-        <div class="row" style="padding-top: 50px;">
-            <button id="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn text-white"><i class="fa fa-edit" aria-hidden="true" style="padding-right: 10px;"></i>Edit Profile</button>
+        <div class="rounded-4 col-5 col-sm-3 col-md-3 col-lg-2" style="height: 50px; background-color: #6EC500; margin-top: 50px; display: flex;">
+            <button id="add" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 100%;" class="btn text-white fs-4 fw-bold"><i class="fa fa-plus" aria-hidden="true"></i> Add</button>
         </div>
-        <div class="row" style="padding-top: 25px;">
-            <div class="col-lg-3 offset-lg-0 col-md-8 offset-md-2">
-                <div class="ratio ratio-1x1" id="img" data-bind="attr:{src: img}" alt=""></div>
-            </div>
-            <div class="col-lg-7 col-md-12 offset-lg-1">
-                <div id="name" style="padding-bottom: 25px;"><h1 data-bind="text: name">{producerName}</h1></div>
-                <div id="mail" style="padding-bottom: 10px;"><h5>{contactMail}</h5></div>
-                <div id="phone" style="padding-bottom: 10px;"><h5>{contactPhone}</h5></div>
-            </div>
-        </div>
-        <div class="row" style="padding-top: 30px;">
-            <div class="col-12" style="padding-bottom: 25px;">
-                <h1>Description</h1>
-            </div>
-            <div class="col-12" id="description">
-                {producerDescription}
+        <div class="row border-2" >
+            <div class="col-12 rounded-2" style="height: 150px; background-color: #6EC500; margin-top: 50px; display: flex;">
+                <div id="img" data-bind="attr:{src: img}" alt=""></div>
+                <div class="text-white fw-bold" style="margin-top: 5px;">
+                    <div class="fs-1" id="productName" data-bind="text: name" alt="">{productName}</div>
+                    <div class="fs-3" id="productType" data-bind="text: " alt="">{productType}</div>
+                    <div class="fs-5" id="productName" data-bind="text: price" alt="">{productPrice}</div>
+                </div>
+                <button id="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn text-white fs-2" style="margin-left: auto; margin-right: 20px;"><i class="fa fa-edit" aria-hidden="true"></i></button>
             </div>
         </div>
     </div>
     
+
     <!-- Modal -->
     <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit profile</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Product Info</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form>
               <div class="modal-body">
                 <div class="mb-3">
-                  <label for="inputproducerName" class="form-label">Producer Name</label>
-                  <input type="text" class="form-control" id="inputproducerName" name="fname">
+                  <label for="inputproducerName" class="form-label">Product Name</label>
+                  <input type="text" class="form-control" id="inputproductName" name="name">
                 </div>
                 <div class="mb-3">
-                  <label for="InputContactEmail" class="form-label">Contact Email</label>
-                  <input type="email" class="form-control" id="InputContactEmail" name="email">
+                  <label for="inputproductType" class="form-label">Product Type</label>
+                  <input type="text" class="form-control" id="inputproductType">
                 </div>
                 <div class="mb-3">
-                  <label for="InputContactPhone" class="form-label">Contact Phone</label>
-                  <input type="tel" pattern="[0-9]{9}" class="form-control" id="InputContactPhone" name="contact-phone">
-                </div>
-                <div class="mb-3">
-                  <label for="inputImageURL" class="form-label">Profile Photo url</label>
+                  <label for="inputImageURL" class="form-label">Product Photo url</label>
                   <input type="text" class="form-control" id="inputImageURL" name="photo">
                 </div>
                 <div class="mb-3">
-                  <label for="inputWebsite" class="form-label">Website</label>
-                  <input type="text" class="form-control" id="inputWebsite" name="website">
-                </div>
-                <div class="mb-3">
-                  <label for="inputDescription" class="form-label">Description</label>
-                  <textarea class="form-control" id="inputDescription" rows="5" name="description"></textarea>
+                  <label for="inputproducerName" class="form-label">Product Price (€/kg)</label>
+                  <input type="number" class="form-control" id="inputproductPrice" name="price">
                 </div>
             </div>
             <div class="modal-footer">
