@@ -49,7 +49,7 @@
   <!-- CONTENT -->
     <div class="container">
         <div class="row" style="padding-top: 50px;">
-            <button id="edit" class="btn text-white"><i class="fa fa-edit" aria-hidden="true" style="padding-right: 10px;"></i>Edit Profile</button>
+            <button id="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn text-white"><i class="fa fa-edit" aria-hidden="true" style="padding-right: 10px;"></i>Edit Profile</button>
         </div>
         <div class="row" style="padding-top: 25px;">
             <div class="col-lg-3 offset-lg-0 col-md-8 offset-md-2">
@@ -71,6 +71,48 @@
         </div>
     </div>
     
+    <!-- Modal -->
+    <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit profile</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form>
+              <div class="modal-body">
+                <div class="mb-3">
+                  <label for="inputproducerName" class="form-label">Producer Name</label>
+                  <input type="text" class="form-control" id="inputproducerName" name="fname">
+                </div>
+                <div class="mb-3">
+                  <label for="InputContactEmail" class="form-label">Contact Email</label>
+                  <input type="email" class="form-control" id="InputContactEmail" name="email">
+                </div>
+                <div class="mb-3">
+                  <label for="InputContactPhone" class="form-label">Contact Phone</label>
+                  <input type="tel" pattern="[0-9]{9}" class="form-control" id="InputContactPhone" name="contact-phone">
+                </div>
+                <div class="mb-3">
+                  <label for="inputImageURL" class="form-label">Profile Photo url</label>
+                  <input type="text" class="form-control" id="inputImageURL" name="photo">
+                </div>
+                <div class="mb-3">
+                  <label for="inputWebsite" class="form-label">Website</label>
+                  <input type="text" class="form-control" id="inputWebsite" name="website">
+                </div>
+                <div class="mb-3">
+                  <label for="inputDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="inputDescription" rows="5" name="description"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" style="background-color: #6EC500; color: white;" class="btn">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>

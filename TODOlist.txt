@@ -1,3 +1,4 @@
+botão logout para todas as páginas
 página para adicionar/remover/editar produtos
 editar informação produtor (modal)
 gerir pedidos (e página que o possiblite)
