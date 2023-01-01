@@ -105,6 +105,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.rejectOrder()
         elif self.path == "/orderPrepared":
             self.markOrderAsPrepared()
+        elif self.path == "/getSentOrders":
+            self.getSentOrders()
+        elif self.path == "/getReceivedOrders":
+            self.getReceivedOrders()
         else:
             self.send_error(404, 'Action Not Available: {}'.format(self.path))
         return
@@ -221,10 +225,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if not database.tableExists("products"):
             database.createTable("products", True)
         product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": (-1 if self.fields.get("stock") is None else self.fields.get("stock")), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": True, "producerId": producerId})
-        self.send_response(200)
-        self.send_header('Content-type', "application/json")
+        self.send_response(302)
+        self.send_header('Location', '/manageproducts')
         self.end_headers()
-        self.wfile.write(bytes(database.json.dumps(product), 'utf-8'))
+        return
 
     @onlyProducer
     def editProduct(self):
@@ -345,7 +349,6 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     @onlyLogged
     def payOrder(self):
-        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
         if not database.tableExists("orders"):
             self.send_error(404, "Orders table not exists")
         if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
@@ -406,10 +409,10 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
     @onlyProducer
     def markOrderAsPrepared(self):
-        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
-        producerId = database.getRowById("login", userId)["producerId"]
         if not database.tableExists("orders"):
             self.send_error(404, "Orders table not exists")
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
         if database.rowExists("orders", lambda row: row["id"] == self.fields["orderId"]):
             order = database.getRowById("orders", self.fields["orderId"])
             product = database.getRowById("products", order["productId"])
@@ -426,6 +429,30 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             self.send_error(400, "Requested order doesn't exists")
         return
 
+    @onlyLogged
+    def getSentOrders(self):
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
+        self.end_headers()
+        conditions = lambda row: row["userId"] == userId
+        self.wfile.write(bytes(database.json.dumps(database.getRows("orders", conditions)), 'utf-8'))
+
+    @onlyProducer
+    def getReceivedOrders(self):
+        if not database.tableExists("orders"):
+            self.send_error(404, "Orders table not exists")
+        userId = database.getRows("sessions", lambda row: row["sessionId"] == self.cookies["sessionId"])[0]["userId"]
+        producerId = database.getRowById("login", userId)["producerId"]
+        self.send_response(200)
+        self.send_header('Content-type', "application/json")
+        self.end_headers()
+        def conditions (row):
+            product = database.getRowById("products", row["productId"])
+            return product["producerId"] != producerId
+        self.wfile.write(bytes(database.json.dumps(database.getRows("orders", conditions)), 'utf-8'))
+
+       
         
 
         
