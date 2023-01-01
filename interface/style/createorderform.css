@@ -1,0 +1,114 @@
+/*Navbar*/
+.nav-link{
+    color: white;
+    padding-right: 25px;
+    width: 115px;
+    text-align: center;
+}   
+
+.nav-item:not(#cart,#login){
+    border-radius: 30px;
+    background-color: #6EC500;
+    margin-right: 30px;
+    color: white;
+}
+
+#right{
+    margin-left: auto;
+}
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;600;700;800&display=swap');
+body{
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+}
+
+
+
+ 
+.screen{
+    height: 100%;
+    width: 100%;
+}
+   
+.content{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.inputs{
+    margin-top: 2%;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    
+    height: 40px;
+    padding-left: 10px;
+    background-color: #f1f1f1;
+
+}
+
+#FullName{
+    width: 100%;
+}
+
+#NIF{
+    width: 49%;
+    margin-right: 0.5%;  
+}
+#Email{
+    width: 49%;
+    float: right;
+}
+
+
+#Street{
+    width: 100%;
+}
+
+#Zip{
+    width: 49%;
+    margin-right: 0.5%;  
+}
+#Number{
+    width: 49%;
+    float: right;
+}
+
+#District{
+    width: 49%;
+    margin-right: 0.5%;  
+}
+#Location{
+    width: 49%;
+    float: right;
+}
+
+/*Estilo da div do butão submit*/
+#buttonsub{
+    float: right;
+    margin-top: 40px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    width: 30%;
+    height: 40px;
+    background-color: #6EC500;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+#buttonsub:hover{
+    opacity: 0.8;
+}
+

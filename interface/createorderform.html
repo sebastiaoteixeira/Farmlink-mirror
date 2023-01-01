@@ -11,7 +11,7 @@
     <link rel="icon" type="image/x-icon" href="./Images/FavIcon.png">
     <title>FarmLink</title>
     <!--CSS-->
-    <link rel="stylesheet" href="./style/cart.css">
+    <link rel="stylesheet" href="./style/createorderform.css">
     <!--FONTS-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <!-- Jquery -->
@@ -64,81 +64,37 @@
     </nav>
   </div>
   <!--CONTENT-->
-  <div class="container">
-    <h1><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</h1>
-    <hr>
-    <table id="cart-content" class="table">
-      <thead>
-        <tr>
-          <th scope="col">Nº</th>
-          <th scope="col"></th>
-          <th scope="col">Name</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Un. Price (€/Kg)</th>
-          <th scope="col">To. Price (€)</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody data-bind="foreach: products">
-        <tr style="vertical-align: middle;">
-          <th scope="row" data-bind="text: ($index() + 1)">1</th>
-          <td>
-          <img class="square" data-bind="attr: {src: img}"></div></td>
-          <td><span data-bind="text: name"></span></td>
-          <td><span data-bind="text: qty"></span>g</td>
-          <td><span data-bind="text: price.toFixed(2)"></span>€</td>
-          <td><span data-bind="text: (qty*price/1000).toFixed(2)"></span>€</td>
-          <td><button class="btn btn-danger" data-bind="click: $parent.removeProduct">X</button></td>
-        </tr>
-        <!-- ko if: $index() == $parent.products().length - 1 -->
-        <tr>
-          <th><br>Total</th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th data-bind="html: '<br>' + $parent.total().toFixed(2) + '€'"></th>
-          <th></th>
-        </tr>
-        <!-- /ko -->
-      </tbody>
-    </table>
-    <a class="btn text-white" style="background-color: #6EC500; float: right;" href="./createorderform.html">Buy now</a>
-  </div>
-  <script>
-    function Cart() {
-      this.products = ko.observableArray([]);
-      this.total = ko.computed(() => {
-        let totalc = 0;
-        for (let i = 0; i < this.products().length; i++) {
-          totalc += this.products()[i]["qty"] * this.products()[i]["price"] / 1000;
-        }
-        return totalc;
-      }, this);
-      this.updateCart = () => {
-        let products_index = JSON.parse(localStorage.getItem("cart"))
-        this.products.removeAll();
-        for (let i = 0; i < products_index.length; i++) {           
-          $.get("get/products?id=" + products_index[i]["id"], (result) => {
-            let cartElement = result[0]
-            cartElement.qty = products_index[i]["qty"]
-            this.products.push(cartElement);  
-          }); 
-        }
-      }
-      this.removeProduct = (product) => {
-        let products_index = JSON.parse(localStorage.getItem("cart"))
-        products_index = products_index.filter((value) => { return value["id"] != product["id"] })
-        localStorage.setItem("cart", JSON.stringify(products_index))
-        this.updateCart();
-      }
-      this.clearCart = () => {
-        localStorage.removeItem("cart")
-      }
-    }
-    var cart = new Cart()
-    cart.updateCart()
-    ko.applyBindings(cart, document.getElementById("cart-content"));
-  </script>
+    <div class="container">
+        <form action="createOrder" method="">
+            <div id="personal">
+                <h1 style="font-weight: bolder; margin-top: 50px;">Personal</h1>
+                <div>
+                    <input class="inputs" type="text" name="" id="FullName" placeholder="Full Name">
+                </div>
+                <div>
+                    <input class="inputs" type="text" name="" id="NIF" placeholder="NIF">
+                    <input class="inputs" type="text" name="" id="Email" placeholder="Email address">
+                </div>
+            </div>
+            <div id="shipping">
+                <h1 style="font-weight: bolder; margin-top: 50px;">Shipping Data</h1>
+                <div>
+                    <input class="inputs" type="text" name="" id="Street" placeholder="Street Name">
+                </div>
+                <div>
+                    <input class="inputs" type="text" name="" id="Zip" placeholder="Zip Code">
+                    <input class="inputs" type="text" name="" id="Number" placeholder="Contact Number">
+                </div>
+                <div>
+                    <input class="inputs" type="text" name="" id="District" placeholder="District">
+                    <input class="inputs" type="text" name="" id="Location" placeholder="Location">
+                </div>
+            </div> 
+            
+            <div class="submit">
+                <input type="submit" id="buttonsub" value="Payment">
+            </div>
+        </form>
+    </div>
 </body>
 </html>
