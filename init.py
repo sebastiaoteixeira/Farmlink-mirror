@@ -158,8 +158,9 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
     def login(self):
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
-            self.createSession(database.getRows("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest())[0]["id"], self.fields.get("remember"))
-            location = '/producer' if self.fields.get("producer") else '/home'
+            newLogin = database.getRows("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest())[0]
+            self.createSession(newLogin["id"], self.fields.get("remember"))
+            location = '/producer' if newLogin["producer"] else '/home'
             self.send_header('Location', location)
             self.end_headers()
         else:
