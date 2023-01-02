@@ -159,7 +159,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if database.tableExists("login") and database.rowExists("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest()): 
             self.send_response(302)
             self.createSession(database.getRows("login", lambda row: row["email"] == self.fields["email"] and row["password"] == sha3_512(bytes(self.fields["password"], 'utf-8')).hexdigest())[0]["id"], self.fields.get("remember"))
-            self.send_header('Location', '/home')
+            location = '/producer' if self.fields.get("producer") else '/home'
+            self.send_header('Location', location)
             self.end_headers()
         else:
             self.send_error(400, "Email or password invalid")
