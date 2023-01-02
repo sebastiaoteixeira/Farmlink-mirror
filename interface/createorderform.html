@@ -64,8 +64,9 @@
     </nav>
   </div>
   <!--CONTENT-->
+  <form action="createOrder" method="">
     <div class="container">
-        <form action="createOrder" method="">
+        
             <div id="personal">
                 <h1 style="font-weight: bolder; margin-top: 50px;">Personal</h1>
                 <div>
@@ -91,10 +92,27 @@
                 </div>
             </div> 
             
-            <div class="submit">
-                <input type="submit" id="buttonsub" value="Payment">
+            <div>
+                <button type="button" id="buttonsub" data-bs-toggle="modal" data-bs-target="#exampleModal">Payment</button>
             </div>
-        </form>
+            
+        
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h1 class="text-center my-3 fw-bold">Confirm Payment</h1>
+            <div class="d-flex col-12">
+              <button type="button" class="buttonmodal col-5" data-bs-dismiss="modal">No</button>
+              <input type="submit" class="buttonmodal col-5 offset-2" value="Yes">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </body>
 </html>

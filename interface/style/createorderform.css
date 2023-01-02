@@ -93,7 +93,7 @@ a{
     float: right;
 }
 
-/*Estilo da div do butão submit*/
+/*Estilo da div do botão submit*/
 #buttonsub{
     float: right;
     margin-top: 40px;
@@ -109,6 +109,23 @@ a{
     transition: 0.3s ease;
 }
 #buttonsub:hover{
+    opacity: 0.8;
+}
+
+.buttonmodal{
+    float: right;
+    margin-top: 40px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+    height: 40px;
+    background-color: #6EC500;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+.buttonmodal:hover{
     opacity: 0.8;
 }
 
