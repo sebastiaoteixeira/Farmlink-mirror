@@ -19,6 +19,7 @@
     <script src="scripts/jquery.cookie.js"></script>
     <!-- KnockoutJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <script src="scripts/login.js"></script>
 </head>
 <body>
   <!--NAVBAR-->
@@ -52,12 +53,19 @@
               </button>
             </form>
             <ul class="navbar-nav">
+              <!-- ko ifnot: logged -->
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="./login.html">Login</a>
               </li>
               <li class="nav-item" style="background-color: black;">
                 <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
               </li>
+              <!-- /ko -->
+              <!-- ko if: logged -->
+              <li class="nav-item" style="background-color: black" data-bind="click: logout">
+                <a class="nav-link" aria-current="page">Logout</a>
+              </li>
+              <!-- /ko -->
             </ul>
           </div>
         </div>
@@ -139,6 +147,7 @@
     var cart = new Cart()
     cart.updateCart()
     ko.applyBindings(cart, document.getElementById("cart-content"));
+    ko.applyBindings(login, document.getElementById("navbar_top"));
   </script>
 </body>
 </html>
