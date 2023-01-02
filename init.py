@@ -227,8 +227,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if not database.tableExists("products"):
             database.createTable("products", True)
         product = database.addRow("products", {"name": self.fields.get("name"), "type": self.fields.get("type"), "price": self.fields.get("price"), "stock": (-1 if self.fields.get("stock") is None else self.fields.get("stock")), "description": self.fields.get("description"), "img": self.fields.get("img"), "visible": True, "producerId": producerId})
-        self.send_response(302)
-        self.send_header('Location', '/manageproducts')
+        self.send_response(201)
         self.end_headers()
         return
 
