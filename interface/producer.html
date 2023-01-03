@@ -14,6 +14,11 @@
         <link rel="stylesheet" href="./style/producer.css">
         <!--FONTS-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <!-- Jquery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="scripts/jquery.cookie.js"></script>
+        <!-- KnockoutJS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
     </head>
 <body>
     <!--NAVBAR-->
@@ -47,18 +52,19 @@
   </div>
 
   <!-- CONTENT -->
-    <div class="container">
+    <!-- ko if: producerData -->
+    <div id="content" class="container" data-bind="using: producerData">
         <div class="row" style="padding-top: 50px;">
             <button id="edit" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn text-white"><i class="fa fa-edit" aria-hidden="true" style="padding-right: 10px;"></i>Edit Profile</button>
         </div>
         <div class="row" style="padding-top: 25px;">
             <div class="col-lg-3 offset-lg-0 col-md-8 offset-md-2">
-                <div class="ratio ratio-1x1" id="img" data-bind="attr:{src: img}" alt=""></div>
+                <div class="ratio ratio-1x1" id="img" data-bind="attr: {src: photo}" alt=""></div>
             </div>
             <div class="col-lg-7 col-md-12 offset-lg-1">
                 <div id="name" style="padding-bottom: 25px;"><h1 data-bind="text: name">{producerName}</h1></div>
-                <div id="mail" style="padding-bottom: 10px;"><h5>{contactMail}</h5></div>
-                <div id="phone" style="padding-bottom: 10px;"><h5>{contactPhone}</h5></div>
+                <div id="mail" style="padding-bottom: 10px;"><h5 data-bind="text: email">{contactMail}</h5></div>
+                <div id="phone" style="padding-bottom: 10px;"><h5 data-bind="text: phone">{contactPhone}</h5></div>
             </div>
         </div>
         <div class="row" style="padding-top: 30px;">
@@ -70,6 +76,7 @@
             </div>
         </div>
     </div>
+    <!-- /ko -->
     
     <!-- Modal -->
     <div class="modal modal-lg fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -113,6 +120,23 @@
         </div>
       </div>
     </div>
-
+    <script src="scripts/login.js"></script>
+    <script>
+        function VM() {
+            this.producerData = ko.observable();
+            this.update = () => {
+                $.get("/get/producer?id=" + login.loginData().producerId, (result) => {
+                    console.log(result);
+                    this.producerData(result[0]);
+                });
+            }
+        }
+        var viewModel = new VM();
+        login.onupdate(() => {
+            viewModel.update();
+        })
+        login.updateLoginData();
+        ko.applyBindings(viewModel);
+    </script>
 </body>
 </html>
