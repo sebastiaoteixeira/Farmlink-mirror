@@ -14,6 +14,13 @@
         <link rel="stylesheet" href="./style/orderslist.css">
         <!--FONTS-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <!-- Jquery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="scripts/jquery.cookie.js"></script>
+        <!-- KnockoutJS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+        <!-- JS -->
+        <script src="scripts/login.js"></script>
     </head>
 <body>
     <!--NAVBAR-->
@@ -48,24 +55,105 @@
 
   <!-- CONTENT -->
     <div class="container">
-        <div class="row border-2" >
-            <div class="col-12 rounded-2" style="height: 150px; background-color: #6EC500; margin-top: 50px; display: flex;">
-                <div id="img" data-bind="attr:{src: img}" alt=""></div>
+        <h1 style="margin-bottom: 20px">Pendent Orders</h1>
+        <div class="row border-2" data-bind="foreach: pendentOrders">
+            <div class="col-12 rounded-2" data-bind style="height: 150px; background-color: #6EC500; margin-bottom: 50px; display: flex;">
+                <img id="img" data-bind="attr:{src: img}" alt=""></img>
                 <div class="text-white fw-bold" style="margin-top: 5px;">
                     <div class="fs-1" id="productName" data-bind="text: name" alt="">{productName}</div>
-                    <div class="fs-3" id="productType" data-bind="text: " alt="">{productType}</div>
-                    <div class="fs-5" id="productName" data-bind="text: price" alt="">{productQuantity}</div>
+                    <div class="fs-3" id="productType" data-bind="text: type" alt="">{productType}</div>
+                    <div class="fs-5" id="productName" data-bind="text: price * qty /1000 + '€'" alt="">{productQuantity}</div>
                 </div>
-                <div style="float: right; width: 140px; margin-left: auto;">
-                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;">V Accept</button>
+                <div style="float: right; width: 170px; margin-left: auto;">
+                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;" data-bind="click: $parent.acceptOrder">V Accept</button>
                     <button id="Reject" class="btn btn-light text-danger fs-3 fw-bold" style="width: 100%; position: relative; bottom: -10px;">X Reject</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="container">
+        <h1>Accepted Orders</h1>
+        <div class="row border-2" data-bind="foreach: acceptedOrders">
+            <div class="col-12 rounded-2" data-bind style="height: 150px; background-color: #6EC500; margin-bottom: 50px; display: flex;">
+                <img id="img" data-bind="attr:{src: img}" alt=""></img>
+                <div class="text-white fw-bold" style="margin-top: 5px;">
+                    <div class="fs-1" id="productName" data-bind="text: name" alt="">{productName}</div>
+                    <div class="fs-3" id="productType" data-bind="text: type" alt="">{productType}</div>
+                    <div class="fs-5" id="productName" data-bind="text: price * qty /1000 + '€'" alt="">{productQuantity}</div>
+                </div>
+                <div style="float: right; width: 170px; margin-left: auto;">
+                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;">V Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
     
+    <script>
+        function VM() {
+            this.producerData = ko.observable();
+            this.orders = ko.observableArray([])
+            this.pendentOrders = ko.computed(() => {
+                res = []
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i].status == 3) {
+                        res.push(this.orders()[i]);
+                    }
+                }
+                return res;
+            }, this);
 
+            this.acceptedOrders = ko.computed(() => {
+                res = []
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i].status == 4) {
+                        res.push(this.orders()[i]);
+                    }
+                }
+                return res;
+            }, this);
 
+            this.acceptOrder = (order) => {
+                let newOrder = order;
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i] == order) {
+                        this.orders.pop(i);
+                        newOrder.status = 4;
+                        this.orders.push(newOrder);
+                    }
+                }
+                $.post("/acceptOrder", {"orderId": order.id}, () => { self.updateOrders() });
+            }
+
+            this.update = () => {
+                $.get("/get/producer?id=" + login.loginData().producerId, (result) => {
+                    console.log(result);
+                    this.producerData(result[0]);
+                    this.updateOrders();
+                });
+            }
+
+            this.updateOrders = () => {
+                $.post("/getReceivedOrders", {}, (result) => {
+                    for (let i = 0; i < result.length; i++) {
+                        let data = result[i];
+                        $.get("/get/products?id=" + data["productId"], (res) => {
+                            data["name"] = res[0]["name"];
+                            data["type"] = res[0]["type"];
+                            data["price"] = res[0]["price"];
+                            data["img"] = res[0]["img"];
+                            this.orders.push(data);
+                        });
+                    }
+                });
+            }
+        }
+        var viewModel = new VM();
+        login.onupdate(() => {
+            viewModel.update();
+        })
+        login.updateLoginData();
+        ko.applyBindings(viewModel);
+    </script>
 
 </body>
 </html>

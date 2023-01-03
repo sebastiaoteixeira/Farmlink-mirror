@@ -336,7 +336,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 if productData["stock"] > 0:
                     database.editRowElement("products", productData["id"], "stock", productData["stock"] - 1)
                 order = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"], "status": 2})
-                self.send_response(200)
+                self.send_response(201)
                 self.send_header('Content-type', "application/json")
                 self.end_headers()
                 self.wfile.write(bytes(database.json.dumps(order), 'utf-8'))
@@ -450,7 +450,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.end_headers()
         def conditions (row):
             product = database.getRowById("products", row["productId"])
-            return product["producerId"] != producerId
+            return product["producerId"] == producerId
         self.wfile.write(bytes(database.json.dumps(database.getRows("orders", conditions)), 'utf-8'))
 
        
