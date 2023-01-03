@@ -78,25 +78,25 @@
             <div id="personal">
                 <h1 style="font-weight: bolder; margin-top: 50px;">Personal</h1>
                 <div>
-                    <input class="inputs" type="text" name="" id="FullName" placeholder="Full Name">
+                    <input class="inputs" type="text" id="FullName" placeholder="Full Name" disabled>
                 </div>
                 <div>
-                    <input class="inputs" type="text" name="" id="NIF" placeholder="NIF">
-                    <input class="inputs" type="text" name="" id="Email" placeholder="Email address">
+                    <input class="inputs" type="text" id="NIF" placeholder="NIF">
+                    <input class="inputs" type="text" id="Email" placeholder="Email address" disabled>
                 </div>
             </div>
             <div id="shipping">
                 <h1 style="font-weight: bolder; margin-top: 50px;">Shipping Data</h1>
                 <div>
-                    <input class="inputs" type="text" name="" id="Street" placeholder="Street Name">
+                    <input class="inputs" type="text" id="Street" placeholder="Street Name">
                 </div>
                 <div>
-                    <input class="inputs" type="text" name="" id="Zip" placeholder="Zip Code">
-                    <input class="inputs" type="text" name="" id="Number" placeholder="Contact Number">
+                    <input class="inputs" type="text" id="Zip" placeholder="Zip Code">
+                    <input class="inputs" type="text" id="Number" placeholder="Contact Number">
                 </div>
                 <div>
-                    <input class="inputs" type="text" name="" id="District" placeholder="District">
-                    <input class="inputs" type="text" name="" id="Location" placeholder="Location">
+                    <input class="inputs" type="text" id="District" placeholder="District">
+                    <input class="inputs" type="text" id="Location" placeholder="Location">
                 </div>
             </div> 
             
@@ -123,6 +123,12 @@
     </div>
   </form>
   <script>
+    $().ready(() => {
+        login.onupdate(() => {
+            $('#FullName').val(login.loginData().name)
+            $('#Email').val(login.loginData().email)
+        });
+    });
     ko.applyBindings(login, document.getElementById("navbar_top"));
   </script>
 </body>

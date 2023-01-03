@@ -2,6 +2,7 @@ function Login() {
     self = this
     self.logged = ko.observable();
     self.loginData = ko.observable({});
+    self.updateCallback = () => {};
     self.validate = () => {
         self.logged(false);
         if ($.cookie("sessionId")) {
@@ -22,6 +23,7 @@ function Login() {
                 {},
                 (result) => {
                     self.loginData(result);
+                    self.updateCallback();
                 }
                 
             )
@@ -30,6 +32,9 @@ function Login() {
     self.logout = () => {
         $.removeCookie("sessionId");
         self.validate();
+    }
+    self.onupdate = (func) => {
+        self.updateCallback = func;
     }
 }
 
