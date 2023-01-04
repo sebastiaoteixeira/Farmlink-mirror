@@ -90,6 +90,7 @@
     
     <script>
         function VM() {
+            let vm = this;
             this.producerData = ko.observable();
             this.orders = ko.observableArray([])
             this.pendentOrders = ko.computed(() => {
@@ -116,12 +117,10 @@
                 let newOrder = order;
                 for (let i = 0; i < this.orders().length; i++) {
                     if (this.orders()[i] == order) {
-                        this.orders.pop(i);
                         newOrder.status = 4;
-                        this.orders.push(newOrder);
                     }
                 }
-                $.post("/acceptOrder", {"orderId": order.id}, () => { self.updateOrders() });
+                $.post("/acceptOrder", {"orderId": order.id}, () => { location.reload() });
             }
 
             this.update = () => {
