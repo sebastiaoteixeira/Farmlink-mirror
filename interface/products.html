@@ -128,7 +128,7 @@
                 <span id="plus" >+</span><!--style="cursor: pointer; color: #6EC500; font-weight: 700;"-->
               </div>
               <div class="addtocart">
-                <button class="cart" id="addToCartBtn" onclick="viewModel.addToCart(viewModel.selectedProduct())" style="font-weight: 600;" data-bs-toggle="popover" data-bs-trigger="manual" data-bs-content="Produto Adicionado ao Carrinho"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px; font-weight: 600;"></i> Add to cart</button>
+                <button class="cart" id="addToCartBtn" onclick="viewModel.addToCart(viewModel.selectedProduct())" style="font-weight: 600;" data-bs-toggle="popover" data-bs-trigger="click" data-bs-content="Produto Adicionado ao Carrinho"><i class="fa fa-shopping-cart" aria-hidden="true" style="padding-right: 10px; font-weight: 600;"></i> Add to cart</button>
               </div>
             </div>
           </div>
@@ -174,7 +174,7 @@
       Login.call(this);
       this.products = ko.observableArray([]);
       this.producers = ko.observableArray([]);
-	  this.selectedProduct = ko.observable({"name": "Kiwi", "img": "./Images/kiwi.jpg", "price": 1.99});
+	  this.selectedProduct = ko.observable({"name": "Kiwi", "img": "./Images/kiwi.jpg", "price": 1.99, "producerId": 1});
       this.search = ko.observable();
       this.getProducer = function (producerId) {
         for (let i = 0; i < this.producers().length; i++) {
@@ -224,17 +224,22 @@
         this.selectedProduct(product);
       }
     }
+    
+    var popover = new bootstrap.Popover(document.getElementById("addToCartBtn"), {
+        popperConfig: function (defaultBsPopperConfig) {
+            return defaultBsPopperConfig;
+        }
+    });
+    
+    $('#addToCartBtn').click(() => {
+        setTimeout(()=> { popover.hide(); }, 1800);
+    });
+    
     var viewModel = new VM();
     viewModel.updateProducts();
     viewModel.updateProducers();
     ko.applyBindings(viewModel);
 	
-    var popover = new bootstrap.Popover("#addToCartBtn", {
-        popperConfig: function (defaultBsPopperConfig) {
-            return defaultBsPopperConfig;
-        }
-    })
-    ko.applyBindings(login);
   </script>
 </body>
 </html>
