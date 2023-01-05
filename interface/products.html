@@ -145,15 +145,15 @@
     		//QUANTITYBUTTON
 			$("#minus").click(function () {
 				var $input = $(this).parent().find('input');
-				var count = parseInt($input.val()) - 150;
-				count = count < 0 ? 0 : count;
+				var count = parseInt($input.val()) - 50;
+				count = count < 50 ? 50 : count;
 				$input.val(count+"g");
 				$input.change();
 				return false;
 			});
 			$("#plus").click(function () {
 				var $input = $(this).parent().find('input');
-				var count = parseInt($input.val()) + 150;
+				var count = parseInt($input.val()) + 50;
 				$input.val(count+"g");
                 $input.change();
 				return false;
