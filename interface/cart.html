@@ -78,9 +78,10 @@
   <div class="container">
     <h1><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</h1>
     <hr>
-    <!-- ko if: products_index.length == 0 -->
-    <p>Vazio</p>
+    <!-- ko ifnot: cart -->
+    <p>empty</p>
     <!-- /ko -->
+    
     <table id="cart-content" class="table">
       <thead>
         <tr>
@@ -104,6 +105,7 @@
           <td><span data-bind="text: (qty*price/1000).toFixed(2)"></span>€</td>
           <td><button class="btn btn-danger" data-bind="click: $parent.removeProduct">X</button></td>
         </tr>
+        
         <!-- ko if: $index() == $parent.products().length - 1 -->
         <tr>
           <th><br>Total</th>

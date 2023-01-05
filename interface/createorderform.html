@@ -156,10 +156,10 @@
                 "orderId": orders[i].id,
             },
             () => {
+                localStorage.removeItem("cart")
                 location.href = "/home"
             });
         }
-        localStorage.removeItem("cart")
     })
   </script>
 </body>
