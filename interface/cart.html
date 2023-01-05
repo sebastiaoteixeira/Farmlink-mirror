@@ -60,9 +60,12 @@
               <li class="nav-item" style="background-color: black;">
                 <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
               </li>
+              <li class="nav-item" style="background-color: black; min-width: 147px;">
+                <a class="nav-link" style="width: fit-content;" aria-current="page" href="./signupproducer.html">Become a Partner</a>
+              </li>
               <!-- /ko -->
               <!-- ko if: logged -->
-              <li class="nav-item" style="background-color: black" data-bind="click: logout">
+              <li class="nav-item" style="background-color: black;" data-bind="click: logout">
                 <a class="nav-link" aria-current="page">Logout</a>
               </li>
               <!-- /ko -->
@@ -148,6 +151,7 @@
     cart.updateCart()
     ko.applyBindings(cart, document.getElementById("cart-content"));
     ko.applyBindings(login, document.getElementById("navbar_top"));
+    
   </script>
 </body>
 </html>

@@ -64,6 +64,9 @@
               <li class="nav-item" style="background-color: black;">
                 <a class="nav-link" aria-current="page" href="./signup.html">Sign-up</a>
               </li>
+              <li class="nav-item" style="background-color: black; min-width: 147px;">
+                <a class="nav-link" style="width: fit-content;" aria-current="page" href="./signupproducer.html">Become a Partner</a>
+              </li>
               <!-- /ko -->
               <!-- ko if: logged -->
               <li class="nav-item" style="background-color: black;" data-bind="click: logout">
@@ -231,7 +234,7 @@
             return defaultBsPopperConfig;
         }
     })
-
+    ko.applyBindings(login);
   </script>
 </body>
 </html>
