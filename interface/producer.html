@@ -59,7 +59,7 @@
         </div>
         <div class="row" style="padding-top: 25px;">
             <div class="col-lg-3 offset-lg-0 col-md-8 offset-md-2">
-                <div class="ratio ratio-1x1" id="img" data-bind="attr: {src: photo}" alt=""></div>
+                <img class="ratio ratio-1x1" id="img" data-bind="attr: {src: photo}" alt="">
             </div>
             <div class="col-lg-7 col-md-12 offset-lg-1">
                 <div id="name" style="padding-bottom: 25px;"><h1 data-bind="text: name">{producerName}</h1></div>
@@ -71,7 +71,7 @@
             <div class="col-12" style="padding-bottom: 25px;">
                 <h1>Description</h1>
             </div>
-            <div class="col-12" id="description">
+            <div class="col-12" id="description" data-bind="text: description">
                 {producerDescription}
             </div>
         </div>
