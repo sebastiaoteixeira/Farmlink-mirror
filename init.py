@@ -305,7 +305,8 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
             elif self.fields.get("website"):
                 database.editRowElement("producer", producerId, "website", self.fields["website"])
 
-            self.send_response(201)
+            self.send_response(302)
+            self.send_header("location", "/producer")
             self.end_headers()
             return
 
