@@ -118,7 +118,7 @@
                 <h1 style="font-weight: 700;" data-bind="text: selectedProduct().name"></h1>
               </div>
               <div class="producername">
-                <h3 style="font-weight: 500;" data-bind="text: getProducer(selectedProduct()[producerId].name">Quinta do Joaquim</h3>
+                <h3 style="font-weight: 500;" data-bind="text: getProducer(selectedProduct()['producerId']).name">Quinta do Joaquim</h3>
               </div>
               <p class="productprice" data-bind="text: selectedProduct().price.toFixed(2) + '€/Kg'" style="font-weight: 600;">
               </p>
@@ -142,7 +142,7 @@
     </div>
   </div>
   
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+  
   <script>
     $(document).ready(function() {
     		//QUANTITYBUTTON

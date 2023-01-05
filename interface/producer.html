@@ -87,22 +87,22 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form action="/editProducer" method="post">
-              <div class="modal-body">
+              <div class="modal-body" data-bind="using: producerData">
                 <div class="mb-3">
                   <label for="inputproducerName" class="form-label">Producer Name</label>
-                  <input type="text" class="form-control" id="inputproducerName" name="fname">
+                  <input type="text" class="form-control" id="inputproducerName" name="fname" data-bind="textInput: name">
                 </div>
                 <div class="mb-3">
                   <label for="InputContactEmail" class="form-label">Contact Email</label>
-                  <input type="email" class="form-control" id="InputContactEmail" name="email">
+                  <input type="email" class="form-control" id="InputContactEmail" name="email" data-bind="textInput: email">
                 </div>
                 <div class="mb-3">
                   <label for="InputContactPhone" class="form-label">Contact Phone</label>
-                  <input type="tel" pattern="[0-9]{9}" class="form-control" id="InputContactPhone" name="contact-phone">
+                  <input type="tel" pattern="[0-9]{9}" class="form-control" id="InputContactPhone" name="contact-phone" data-bind="textInput: phone">
                 </div>
                 <div class="mb-3">
                   <label for="inputImageURL" class="form-label">Profile Photo url</label>
-                  <input type="text" class="form-control" id="inputImageURL" name="photo">
+                  <input type="text" class="form-control" id="inputImageURL" name="photo" data-bind="textInput: photo">
                 </div>
                 <div class="mb-3">
                   <label for="inputWebsite" class="form-label">Website</label>
