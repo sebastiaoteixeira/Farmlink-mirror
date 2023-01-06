@@ -14,58 +14,144 @@
         <link rel="stylesheet" href="./style/orderslist.css">
         <!--FONTS-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <!-- Jquery -->
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="scripts/jquery.cookie.js"></script>
+        <!-- KnockoutJS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
     </head>
 <body>
     <!--NAVBAR-->
-  <div>
-    <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent" style="height: 65; z-index: 2;">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="./home.html">
-            <img src="./Images/LogoPreto1.png" alt="LogoPreto" width="104" height="55">
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item"><a class="nav-link" aria-current="page" href="./manageproducts.html" style="min-width: 147px;">Manage Products</a></li>
-              <li class="nav-item">
-                <a class="nav-link" href="./orderslist.html" style="min-width: 147px;">Manage Orders</a>
-              </li>
-              <li class="nav-item" id="about" style="height: 40px;">
-                <a class="nav-link" href="./about.html">About</a>
-              </li>
-            </ul>
-            <ul class="navbar-nav" id="right">
-                <li class="nav-item" style="background-color: black;">
-                    <a class="nav-link" aria-current="page" href="./home.html">Logout</a>
+    <div>
+        <nav id="navbar_top" class="navbar navbar-expand-lg navbar-transparent" style="height: 65; z-index: 2;">
+            <div class="container-fluid">
+            <a class="navbar-brand" href="./producer.html">
+                <img src="./Images/LogoPreto1.png" alt="LogoPreto" width="104" height="55">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" aria-current="page" href="./manageproducts.html" style="min-width: 147px;">Manage Products</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./orderslist.html" style="min-width: 147px;">Manage Orders</a>
                 </li>
-            </ul>
-          </div>
-        </div>
-    </nav>
-  </div>
+                </ul>
+                <ul class="navbar-nav" id="right">
+                    <li class="nav-item" id="profile">
+                    <a class="nav-link" href="./producer.html" style="width: 50px; color: black; font-size: 30px;"><i class="fa fa-user" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item" style="background-color: black;">
+                        <a class="nav-link" aria-current="page">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </nav>
+    </div>
 
   <!-- CONTENT -->
     <div class="container">
-        <div class="row border-2" >
-            <div class="col-12 rounded-2" style="height: 150px; background-color: #6EC500; margin-top: 50px; display: flex;">
-                <div id="img" data-bind="attr:{src: img}" alt=""></div>
+        <h1 style="margin-bottom: 20px">Pendent Orders</h1>
+        <div class="row border-2" data-bind="foreach: pendentOrders">
+            <div class="col-12 rounded-2" data-bind style="height: 150px; background-color: #6EC500; margin-bottom: 50px; display: flex;">
+                <img id="img" data-bind="attr:{src: img}" alt=""></img>
                 <div class="text-white fw-bold" style="margin-top: 5px;">
                     <div class="fs-1" id="productName" data-bind="text: name" alt="">{productName}</div>
-                    <div class="fs-3" id="productType" data-bind="text: " alt="">{productType}</div>
-                    <div class="fs-5" id="productName" data-bind="text: price" alt="">{productQuantity}</div>
+                    <div class="fs-3" id="productType" data-bind="text: type" alt="">{productType}</div>
+                    <div class="fs-5" id="productName" data-bind="text: price * qty /1000 + '€'" alt="">{productQuantity}</div>
                 </div>
-                <div style="float: right; width: 140px; margin-left: auto;">
-                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;">V Accept</button>
+                <div style="float: right; width: 170px; margin-left: auto;">
+                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;" data-bind="click: $parent.acceptOrder">V Accept</button>
                     <button id="Reject" class="btn btn-light text-danger fs-3 fw-bold" style="width: 100%; position: relative; bottom: -10px;">X Reject</button>
                 </div>
             </div>
         </div>
     </div>
-    
+    <div class="container">
+        <h1>Accepted Orders</h1>
+        <div class="row border-2" data-bind="foreach: acceptedOrders">
+            <div class="col-12 rounded-2" data-bind style="height: 150px; background-color: #6EC500; margin-bottom: 50px; display: flex;">
+                <img id="img" data-bind="attr:{src: img}" alt=""></img>
+                <div class="text-white fw-bold" style="margin-top: 5px;">
+                    <div class="fs-1" id="productName" data-bind="text: name" alt="">{productName}</div>
+                    <div class="fs-3" id="productType" data-bind="text: type" alt="">{productType}</div>
+                    <div class="fs-5" id="productName" data-bind="text: price * qty /1000 + '€'" alt="">{productQuantity}</div>
+                </div>
+                <div style="float: right; width: 170px; margin-left: auto;">
+                    <button id="Accept" class="btn btn-light text-success fs-3 fw-bold" style="width: 100%; margin-top: 15px;">Prepared</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/login.js"></script>
+    <script>
+        function VM() {
+            let vm = this;
+            this.producerData = ko.observable();
+            this.orders = ko.observableArray([])
+            this.pendentOrders = ko.computed(() => {
+                res = []
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i].status == 3) {
+                        res.push(this.orders()[i]);
+                    }
+                }
+                return res;
+            }, this);
 
+            this.acceptedOrders = ko.computed(() => {
+                res = []
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i].status == 4) {
+                        res.push(this.orders()[i]);
+                    }
+                }
+                return res;
+            }, this);
 
+            this.acceptOrder = (order) => {
+                let newOrder = order;
+                for (let i = 0; i < this.orders().length; i++) {
+                    if (this.orders()[i] == order) {
+                        newOrder.status = 4;
+                    }
+                }
+                $.post("/acceptOrder", {"orderId": order.id}, () => { location.reload() });
+            }
 
+            this.update = () => {
+                $.get("/get/producer?id=" + login.loginData().producerId, (result) => {
+                    console.log(result);
+                    this.producerData(result[0]);
+                    this.updateOrders();
+                });
+            }
+
+            this.updateOrders = () => {
+                $.post("/getReceivedOrders", {}, (result) => {
+                    for (let i = 0; i < result.length; i++) {
+                        let data = result[i];
+                        $.get("/get/products?id=" + data["productId"], (res) => {
+                            data["name"] = res[0]["name"];
+                            data["type"] = res[0]["type"];
+                            data["price"] = res[0]["price"];
+                            data["img"] = res[0]["img"];
+                            this.orders.push(data);
+                        });
+                    }
+                });
+            }
+        }
+        var viewModel = new VM();
+        login.onupdate(() => {
+            viewModel.update();
+        })
+        login.updateLoginData();
+        ko.applyBindings(viewModel);
+    </script>
 </body>
 </html>

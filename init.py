@@ -16,9 +16,12 @@ def getMillis():
 hostname = '0.0.0.0'
 port = 8080
 if len(sys.argv) > 1:
-     if sys.argv[1] == '--production':
+    if sys.argv[1] == '--production':
         hostname = ''
         port = int(os.environ.get('PORT', '8000'))
+    if sys.argv[1] == '--debug':
+        import pdb; pdb.set_trace()
+
 
 class MainRequestHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
@@ -42,7 +45,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
                             if self.fields.get("q"):
                                 for key in row.keys():
-                                    if row[key].lower().count(self.fields["q"].lower()):
+                                    if str(row[key]).lower().count(str(self.fields["q"]).lower()):
                                         return True
                                 return False
                             return True
@@ -247,17 +250,17 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
             if self.fields.get("name"):
                 database.editRowElement("products", productId, "name", self.fields["name"])
-            elif self.fields.get("type"):
+            if self.fields.get("type"):
                 database.editRowElement("products", productId, "type", self.fields["type"])
-            elif self.fields.get("price"):
+            if self.fields.get("price"):
                 database.editRowElement("products", productId, "price", self.fields["price"])
-            elif self.fields.get("stock"):
+            if self.fields.get("stock"):
                 database.editRowElement("products", productId, "stock", self.fields["stock"])
-            elif self.fields.get("description"):
+            if self.fields.get("description"):
                 database.editRowElement("products", productId, "description", self.fields["description"])
-            elif self.fields.get("img"):
+            if self.fields.get("img"):
                 database.editRowElement("products", productId, "img", self.fields["img"])
-            elif self.fields.get("visible"):
+            if self.fields.get("visible"):
                 database.editRowElement("products", productId, "visible", self.fields["visible"])
             
             self.send_response_only(201)
@@ -291,21 +294,23 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if database.rowExists("login", lambda row: row["id"] == userId):
             producerId = database.getRowById("login", userId)["producerId"]
             print("Producer Id:", producerId)
-
+            breakpoint()
+            
             if self.fields.get("fname"):
                 database.editRowElement("producer", producerId, "name", self.fields["fname"])
-            elif self.fields.get("email"):
+            if self.fields.get("email"):
                 database.editRowElement("producer", producerId, "email", self.fields["email"])
-            elif self.fields.get("contact-phone"):
+            if self.fields.get("contact-phone"):
                 database.editRowElement("producer", producerId, "phone", self.fields["contact-phone"])
-            elif self.fields.get("description"):
+            if self.fields.get("description"):
                 database.editRowElement("producer", producerId, "description", self.fields["description"])
-            elif self.fields.get("photo"):
+            if self.fields.get("photo"):
                 database.editRowElement("producer", producerId, "photo", self.fields["photo"])
-            elif self.fields.get("website"):
+            if self.fields.get("website"):
                 database.editRowElement("producer", producerId, "website", self.fields["website"])
 
-            self.send_response(201)
+            self.send_response(302)
+            self.send_header("location", "/producer")
             self.end_headers()
             return
 
@@ -336,7 +341,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
                 if productData["stock"] > 0:
                     database.editRowElement("products", productData["id"], "stock", productData["stock"] - 1)
                 order = database.addRow("orders", {"userId": userId, "productId": self.fields["productId"], "qty": self.fields["qty"], "nif": self.fields["nif"], "street": self.fields["street"], "zip": self.fields["zip"], "number": self.fields["number"], "district": self.fields["district"], "location": self.fields["location"], "status": 2})
-                self.send_response(200)
+                self.send_response(201)
                 self.send_header('Content-type', "application/json")
                 self.end_headers()
                 self.wfile.write(bytes(database.json.dumps(order), 'utf-8'))
@@ -450,7 +455,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         self.end_headers()
         def conditions (row):
             product = database.getRowById("products", row["productId"])
-            return product["producerId"] != producerId
+            return product["producerId"] == producerId
         self.wfile.write(bytes(database.json.dumps(database.getRows("orders", conditions)), 'utf-8'))
 
        

@@ -6,7 +6,7 @@
     text-align: center;
 }   
 
-.nav-item:not(#cart,#login){
+.nav-item:not(#profile,#login){
     border-radius: 30px;
     background-color: #6EC500;
     margin-right: 30px;

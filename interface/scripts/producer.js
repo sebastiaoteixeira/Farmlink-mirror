@@ -2,6 +2,7 @@ var id;
 var productId;
 var list;
 
+
 function getProducerData() {
     $.post(
         "/personalData",

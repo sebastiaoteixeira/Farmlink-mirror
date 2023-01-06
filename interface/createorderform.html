@@ -72,7 +72,7 @@
     </nav>
   </div>
   <!--CONTENT-->
-  <form action="createOrder" method="">
+  <form>
     <div class="container">
         
             <div id="personal">
@@ -115,7 +115,7 @@
             <h1 class="text-center my-3 fw-bold">Confirm Payment</h1>
             <div class="d-flex col-12">
               <button type="button" class="buttonmodal col-5" data-bs-dismiss="modal">No</button>
-              <input type="submit" class="buttonmodal col-5 offset-2" value="Yes">
+              <input id="paybtn" type="button" class="buttonmodal col-5 offset-2" value="Yes">
             </div>
           </div>
         </div>
@@ -130,6 +130,37 @@
         });
     });
     ko.applyBindings(login, document.getElementById("navbar_top"));
+   
+    var orders = []; 
+    $('#buttonsub').click(() => {
+        let cart = JSON.parse(localStorage.getItem("cart"))
+        for (let i = 0; i < cart.length; i++) {
+            $.post("/createOrder", {
+                "productId": cart[i].id,
+                "qty": cart[i].qty,
+                "nif": $("#NIF").val(),
+                "street": $("#Street").val(),
+                "zip": $("#Zip").val(),
+                "number": $("#Number").val(),
+                "district": $("#District").val(),
+                "location": $("#Location").val()
+            },
+            (res) => {
+                orders.push(res);
+            });
+        }
+    });
+    $('#paybtn').click(() => {
+        for (let i = 0; i < orders.length; i++) {
+            $.post("/payOrder", {
+                "orderId": orders[i].id,
+            },
+            () => {
+                localStorage.removeItem("cart")
+                location.href = "/home"
+            });
+        }
+    })
   </script>
 </body>
 </html>

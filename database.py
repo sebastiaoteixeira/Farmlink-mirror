@@ -154,7 +154,6 @@ def editRowElement(tableName, rowId, param, newValue):
         for i in range(len(table["tableRows"])):
             if table["tableRows"][i]["id"] == rowId:
                 table["tableRows"][i][param] = newValue
-                changedRow = table["tableRows"][i]
 
 
         writeTable(tableName, table)
