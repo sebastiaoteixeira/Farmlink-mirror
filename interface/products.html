@@ -53,11 +53,9 @@
               </li>
             </ul>
             
-            <form class="d-flex">
-              <input class="form-control me-2" type="text" placeholder="Search" style="height: 40px; border: black solid 2px; border-radius: 30px;">
-              <button class="btn" type="button" style="height: 40px;color: black; padding-right: 20px"><i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            <div class="d-flex">
+              <input class="form-control me-2" type="text" placeholder="Search" data-bind="textInput: search" style="height: 40px; border: black solid 2px; border-radius: 30px;">
+            </div>
             <ul class="navbar-nav">
               <!-- ko ifnot: logged -->
               <li class="nav-item">
@@ -225,6 +223,7 @@
 	  this.bindModal = (product) => {
         this.selectedProduct(product);
       }
+
     }
     
     var popover = new bootstrap.Popover(document.getElementById("addToCartBtn"), {
@@ -240,6 +239,17 @@
     var viewModel = new VM();
     viewModel.updateProducts();
     viewModel.updateProducers();
+
+    let urlString = location.href.split('?');
+    if (urlString.length > 1) {
+      let paramString = urlString[1].split('&');
+      for (let i = 0; i < paramString.length; i++) {
+        let param = paramString[i].split('=');
+        if (param[0] == 'q') {
+          viewModel.search(param[1]);
+        }
+      }
+    }
     ko.applyBindings(viewModel);
 	
   </script>

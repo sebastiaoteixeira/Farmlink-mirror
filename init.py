@@ -45,7 +45,7 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
 
                             if self.fields.get("q"):
                                 for key in row.keys():
-                                    if row[key].lower().count(self.fields["q"].lower()):
+                                    if str(row[key]).lower().count(str(self.fields["q"]).lower()):
                                         return True
                                 return False
                             return True
