@@ -49,11 +49,9 @@
                 </li>
             </ul>
             <ul class="navbar-nav">
-                <!-- ko if: logged -->
-                <li class="nav-item" style="background-color: black;" data-bind="click: logout">
-                    <a class="nav-link" aria-current="page">Logout</a>
+              	<li class="nav-item" style="background-color: black;" onclick="login.logout()">
+              	    <a class="nav-link" aria-current="page">Logout</a>
                 </li>
-                <!-- /ko -->
             </ul>
         </div>
         </div>
@@ -132,10 +130,6 @@
     </div>
 </div>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="scripts/producer.js"></script>
-<script>
-    ko.applyBindings(login);
-</script>
 </body>
 </html>

@@ -294,7 +294,6 @@ class MainRequestHandler(server.BaseHTTPRequestHandler):
         if database.rowExists("login", lambda row: row["id"] == userId):
             producerId = database.getRowById("login", userId)["producerId"]
             print("Producer Id:", producerId)
-            breakpoint()
             
             if self.fields.get("fname"):
                 database.editRowElement("producer", producerId, "name", self.fields["fname"])

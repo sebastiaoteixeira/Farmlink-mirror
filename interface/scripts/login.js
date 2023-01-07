@@ -32,6 +32,7 @@ function Login() {
     self.logout = () => {
         $.removeCookie("sessionId");
         self.validate();
+        location.href = "/home";
     }
     self.onupdate = (func) => {
         self.updateCallback = func;
