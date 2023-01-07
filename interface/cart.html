@@ -75,14 +75,12 @@
     </nav>
   </div>
   <!--CONTENT-->
-  <div class="container">
+  <div id="cart-content" class="container">
     <h1><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart</h1>
     <hr>
-    <!-- ko ifnot: cart -->
-    <p>empty</p>
-    <!-- /ko -->
+    <p style="text-align:center" data-bind="if: products().length == 0">empty</p>
     
-    <table id="cart-content" class="table">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">Nº</th>
